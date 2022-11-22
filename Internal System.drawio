@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-11-22T22:03:34.706Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="K5nQw0QFcbETPpfePMZq" version="20.6.0" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2022-11-22T22:03:52.998Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="RV4xLWIQF4x5gN3ciUqj" version="20.6.0" type="github" pages="3">
   <diagram id="Fv4jqS7nUxujfiReaPE2" name="System">
     <mxGraphModel dx="946" dy="646" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -31,8 +31,8 @@
         <mxCell id="16r1NsrKbyqBqy0Ava5y-9" value="Storage" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="540" y="583" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="16r1NsrKbyqBqy0Ava5y-10" value="LoRa/LTe" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="365" y="420" width="70" height="30" as="geometry" />
+        <mxCell id="16r1NsrKbyqBqy0Ava5y-10" value="LoRa" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="375" y="420" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="16r1NsrKbyqBqy0Ava5y-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;endArrow=none;" parent="1" source="16r1NsrKbyqBqy0Ava5y-7" target="16r1NsrKbyqBqy0Ava5y-10" edge="1">
           <mxGeometry relative="1" as="geometry">
