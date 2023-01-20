@@ -1,0 +1,17 @@
+syntax = "proto3";
+package models;
+
+// [csharp_declaration]
+option csharp_namespace = "IOT.Monitoring";
+
+message ServerInfo{
+	int32 major = 1;
+	int32 minor = 2;
+	int32 rpc = 3;
+}
+
+message Empty{}
+
+service RemoteEndpoint{
+	rpc GetServerInfo(Empty) returns(ServerInfo){}
+}
