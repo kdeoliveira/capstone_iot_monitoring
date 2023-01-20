@@ -1,6 +1,3 @@
-#include "models.grpc.pb.h"
-#include <grpcpp/grpcpp.h>
-
 #include "server.hpp"
 
 namespace iot_monitoring{
@@ -10,7 +7,7 @@ namespace iot_monitoring{
 		response->set_major(1);
 		response->set_minor(1);
 		response->set_rpc(0);
-		auto ver = ::grpc::Version();
+		
 		return grpc::Status::OK;
 	}
 
