@@ -3,6 +3,8 @@
 #include <memory>
 #include <Windows.h>
 #include "device.hpp"
+#include <iostream>
+#include <sstream>
 
 namespace iot_monitoring {
 	class serial {
@@ -14,8 +16,12 @@ namespace iot_monitoring {
 	public:
 		serial(std::shared_ptr<device> dev) {
 			_device = dev;
-		}
-		int read_data(std::string);
+        }
+
+        serial() = default;
+
+		int serial::read_data(std::stringbuf&, std::size_t);
 		bool write_data(const std::string);
+
 	};
 }
