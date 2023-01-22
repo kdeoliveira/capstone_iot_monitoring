@@ -32,7 +32,7 @@ namespace iot_monitoring {
 
 	class mc final : public device{
 	private:
-		mc(std::string,DCB);
+		mc(std::string,DCB, unsigned long = 0);
 		mc() = default;
 
 	protected:
@@ -42,8 +42,8 @@ namespace iot_monitoring {
 		virtual HANDLE get_handle() override;
 		
 
-		[[nodiscard]] static std::shared_ptr<device> create(std::string str, DCB dcb) {
-			return std::shared_ptr<mc>(new mc(str,dcb));
+		[[nodiscard]] static std::shared_ptr<device> create(std::string str, DCB dcb, unsigned long mode = 0) {
+			return std::shared_ptr<mc>(new mc(str,dcb,mode));
 		}
 
 		//https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawinputdevicelist

@@ -3,14 +3,14 @@
 #include <WinBase.h>
 
 namespace iot_monitoring {
-	mc::mc(std::string port, DCB serial_params)
+	mc::mc(std::string port, DCB serial_params, unsigned long mode)
 	{
 		this->_handle = ::CreateFile(port.c_str(),
 				GENERIC_READ | GENERIC_WRITE,
 				0,
 				NULL, //shared_access
 				OPEN_EXISTING,
-				0, //FILE_FLAG_OVERLAPPED for async handle
+				mode, //FILE_FLAG_OVERLAPPED for async handle
 				NULL
 			);
 
