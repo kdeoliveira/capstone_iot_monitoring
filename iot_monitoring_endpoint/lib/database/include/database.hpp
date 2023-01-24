@@ -100,6 +100,7 @@ namespace iot_monitoring {
 			std::unique_ptr<Class> sc = std::make_unique<Class>(idkey.get_int64().value, timestamp.get_int64().value);
 
 			sc->object_id = result.get()["_id"].get_oid().value;
+			sc->compile_data(result.get()["data"].get_document());
 
 			return sc;
 		}
@@ -131,6 +132,7 @@ namespace iot_monitoring {
 			std::unique_ptr<Class> sc = std::make_unique<Class>(idkey.get_int64().value, timestamp.get_int64().value);
 
 			sc->object_id = result.get()["_id"].get_oid().value;
+			sc->compile_data(result.get()["data"].get_document());
 
 			return sc;
 		}
