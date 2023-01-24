@@ -35,7 +35,6 @@ int main(int argc, char** argv)
 	
 	iot_monitoring::arg_handler h(argc, argv);
 
-	
 
 	auto results = h.handle(iot_monitoring::ARGUMENTS::INSTALL);
 

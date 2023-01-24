@@ -1,4 +1,7 @@
+#include "remoteendpoint.hpp"
 #include "server.hpp"
+
+
 
 namespace iot_monitoring{
 	RemoteEndopintServer::RemoteEndopintServer(){}
@@ -11,7 +14,7 @@ namespace iot_monitoring{
 		return grpc::Status::OK;
 	}
 
-	std::future<void> RemoteEndopintServer::start_server(std::launch mode, const std::string& addr) {
+	std::future<void> start_server(std::launch mode, const std::string& addr) {
 		RemoteEndopintServer service = RemoteEndopintServer();
 		grpc::ServerBuilder builder;
 		builder.AddListeningPort(addr, grpc::InsecureServerCredentials());

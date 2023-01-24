@@ -3,9 +3,10 @@ cmake_minimum_required(VERSION 3.15)
 project("server")
 
 
-add_library(${PROJECT_NAME} STATIC "src/server.cxx" "include/server.hpp")
+add_library(${PROJECT_NAME} STATIC "src/server.cxx")
 
 target_include_directories(${PROJECT_NAME} PRIVATE "./src")
+target_include_directories(${PROJECT_NAME} PRIVATE "./def")
 target_include_directories(${PROJECT_NAME} PRIVATE "./include")
 
 target_include_directories(${PROJECT_NAME} INTERFACE "./include")
@@ -70,7 +71,7 @@ endif()
 #get_filename_component(model_proto "./proto/models.proto" ABSOLUTE)
 #get_filename_component(model_proto_path "${model_proto}" PATH)
 
-add_library(model_proto "include/models.pb.cc" "include/models.pb.h" "include/models.grpc.pb.cc" "include/models.grpc.pb.h" "include/server.hpp")
+add_library(model_proto "def/models.pb.cc" "def/models.pb.h" "def/models.grpc.pb.cc" "def/models.grpc.pb.h" "def/remoteendpoint.hpp")
 
 target_link_libraries(model_proto ${_REFLECTION}
     ${_GRPC_GRPCPP}
@@ -81,7 +82,7 @@ target_link_libraries(model_proto ${_REFLECTION}
 
 
 
-target_link_libraries(${PROJECT_NAME} PUBLIC model_proto ${_REFLECTION}
+target_link_libraries(${PROJECT_NAME} PRIVATE model_proto ${_REFLECTION}
     ${_GRPC_GRPCPP}
     ${_PROTOBUF_LIBPROTOBUF})
 

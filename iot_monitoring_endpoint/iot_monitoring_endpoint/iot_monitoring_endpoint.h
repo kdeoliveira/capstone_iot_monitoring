@@ -2,6 +2,7 @@
 // or project specific include files.
 
 #pragma once
+#include "database.hpp"
 
 #include <iostream>
 #include "device.hpp"
@@ -14,6 +15,10 @@
 
 #include <future>
 #include <istream>
+
+
+
+
 
 char rn[3] = "\r\n"; //should include null termination
 
