@@ -48,6 +48,7 @@ namespace iot_monitoring {
 	public:
 		arg_parser() = delete;
 		arg_parser(std::vector<std::string>::iterator, std::vector<std::string>::iterator);
+		std::vector<std::string> get_args();
 		~arg_parser();
 
 		

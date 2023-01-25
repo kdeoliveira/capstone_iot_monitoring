@@ -16,19 +16,21 @@ namespace iot_monitoring {
 		template<typename T>
 		class schema {
 		protected:
-			uint64_t _id;
-			uint64_t _timestamp;
+			int64_t _id;
+			int64_t _timestamp;
 			T _data;
 
 		public:
 			bsoncxx::oid object_id;
 
-			explicit schema(uint64_t id, uint64_t timestamp) {
+			explicit schema(int64_t id, int64_t timestamp) {
 				this->_id = id;
 				this->_timestamp = timestamp;
 			}
 
-			void set_data(T);
+			void set_data(T data) {
+				this->_data = data;
+			}
 			virtual void compile_data(bsoncxx::document::view) = 0;
 
 			virtual bsoncxx::document::value generate_document() = 0;

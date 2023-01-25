@@ -16,6 +16,11 @@ namespace iot_monitoring {
 		this->_args.clear();
 	}
 
+	std::vector<std::string> arg_parser::get_args() {
+		return this->_args;
+	}
+
+
 	arg_handler::arg_handler(int argc, char** argv) {
 		if (argc < 1) {
 			return;

@@ -1,7 +1,6 @@
 #include "serial.hpp"
 
 
-
 namespace iot_monitoring {
 	bool serial::write_data(const std::string buf) {
 		DWORD bytes_sent;
@@ -55,9 +54,17 @@ namespace iot_monitoring {
         
         return 0;
 	}
+    void async_serial::set_routine(std::function<void(DWORD, DWORD)> _fn) {
+        this->_compl_routine = _fn;
+    }
 
-    void async_serial::set_routine(LPOVERLAPPED_COMPLETION_ROUTINE routine) {
-        this->_compl_routine = routine;
+    VOID WINAPI InternalCompletionRoutine(DWORD error, DWORD num, LPOVERLAPPED lpOverlapped) {
+        //Although the overlapped struct is passed, it is possible to sequentially retrieved the whole struct contained by the pointer
+        read_context* rc = reinterpret_cast<read_context*>(lpOverlapped);
+
+        rc->CompletionRoutine(error, num);
+
+        delete rc;
     }
 
     bool async_serial::write_data(const std::string buf) {
@@ -77,7 +84,6 @@ namespace iot_monitoring {
 
     int async_serial::read_data(std::stringbuf& sb, std::size_t nbChar) {
 
-        OVERLAPPED overlapped = {0};
         
         //Number of bytes we'll have read
         DWORD bytesRead;
@@ -105,9 +111,14 @@ namespace iot_monitoring {
             {
                 toRead = this->_status.cbInQue;
             }
+            read_context* rc = new read_context;
+            
+            std::memset(&rc->CompletionRoutine, 0, sizeof(rc->CompletionRoutine));
+            std::memset(&rc->_overlapped, 0, sizeof(rc->_overlapped));
+            rc->CompletionRoutine = this->_compl_routine;
 
             //Try to read the require number of chars, and return the number of read bytes on success
-            if (ReadFileEx(this->_device->get_handle(), _buf, toRead, &overlapped, this->_compl_routine) > 0)
+            if (ReadFileEx(this->_device->get_handle(), _buf, toRead, &rc->_overlapped, InternalCompletionRoutine) > 0)
             {
                 if (GetLastError() != ERROR_INVALID_USER_BUFFER || GetLastError() != ERROR_NOT_ENOUGH_MEMORY) {
                     sb.sputn((char*)_buf, (std::size_t)toRead); //Stores a pointer to the async returning buffer into stirngbuffer instead

@@ -2,59 +2,35 @@
 //
 
 #include "iot_monitoring_endpoint.h"
-#include <istream>
-
-
-
-void test_packet() {
-	iot_monitoring::data::packet<int, float> _packet;
-
-	_packet = 1;
-	_packet << 1.5f;
-
-	std::stringstream ss;
-
-	ss << _packet;
-
-	
-	//std::istream st = std::istream(&b);
-
-	unsigned char* cc = new unsigned char[sizeof(int) + sizeof(float)];
-
-	ss >> _packet;
-
-
-}
-
-
+#include "iot_reader.hpp"
+#include "iot_db_test.hpp"
+#include "polling.hpp"
+#include "packet_stream.hpp"
 
 
 
 int main(int argc, char** argv)
 {
-	
+
+	std::cout << "IOT MONITORING ENDPOINT" << std::endl;
+	std::cout << "\n\n";
+
 	iot_monitoring::arg_handler h(argc, argv);
 
+	PacketStream* _ps = new PacketStream();
 
-	auto results = h.handle(iot_monitoring::ARGUMENTS::INSTALL);
+	auto results = h.handle(iot_monitoring::ARGUMENTS::PORT);
 
-	//iot_monitoring::serial serial("com9");
+	auto hardware_id = results->get_args();
+	
+	std::cout << "Attempting to connect to hardware id: " << hardware_id.front() << "\n";
 
-	auto ports = iot_monitoring::mc::get_available_hid();
+	auto id = iot_monitoring::mc::get_comm_id(hardware_id.front());
 
-	test_packet();
-
-	//auto server = iot_monitoring::RemoteEndopintServer::start_server(std::launch::async,"0.0.0.0:50051");
-
-	for (const auto& p : ports) {
-		
-		std::cout << "port id: " << p.first << "\n"
-			<< "Vendor Id: " << p.second.dwVendorId << "\n"
-			<< "Product Id: " << p.second.dwProductId << "\n"
-			<< "Version Number: " << p.second.dwVersionNumber << "\n";
-		std::cout << std::endl;
+	if (id.empty()) {
+		std::cout << "Invalid hardware id \n";
+		return -1;
 	}
-
 
 	DCB dcb_serial_params{};
 	dcb_serial_params.BaudRate = CBR_38400;
@@ -63,70 +39,36 @@ int main(int argc, char** argv)
 	dcb_serial_params.Parity = NOPARITY;
 	dcb_serial_params.fDtrControl = DTR_CONTROL_ENABLE;
 
-	
-
-	auto id = iot_monitoring::mc::get_comm_id("USB\\VID_2341&PID_0043");
-	
-	auto x = iot_monitoring::mc::get_available_comm();
-
 	std::shared_ptr<iot_monitoring::device> dev = iot_monitoring::mc::create(id, dcb_serial_params, FILE_FLAG_OVERLAPPED);
 
 
-	istream.set_rdbuf(&bb);
+	std::thread thread_reader{ std::move(producer), dev, _ps };
+
 	
-	iot_monitoring::data::packet<int, float> _packet;
-
-	//Async opeartion
-	iot_monitoring::async_serial async_ser(dev);
-
-	DWORD waiter;
-	async_ser.set_routine(CompletionRoutine);
-
-
-	Sleep(2000); //Awaits arduino to awake serial
-
-	async_ser.read_data(bb, 255);
-
-
-
-	while (true) {
-		waiter = WaitForSingleObjectEx(
-			event,
-			INFINITE,
-			TRUE //alertable state (required)
-		);
-
-		switch (waiter) {
-		case 0: //pending
-
-			//seq_packet seq;
-			//istream >> seq;
-
-			//std::cout << std::endl;
-			//std::cout << "Found " << seq.p.size() << " packets" << std::endl;
-			//if (seq.p.size() > 0) {
-			//	std::cout << "Type: " << typeid(seq.p[0].header.id).name() << "\n" << "{" << seq.p[0].header.id << "," << seq.p[0].payload << "}" << std::endl;
-			//}
-
-			ResetEvent(event);
-			async_ser.read_data(bb, 255);
-			break;
-
-		case WAIT_IO_COMPLETION: //completed
-			std::cout << "Read completed" << std::endl;
-			std::cout << "Total Queue Size: " << queue.size() << std::endl;
-			Sleep(10000);
-			SetEvent(event);
-			break;
-		default:
-			printf("WaitForSingleObjectEx (%d)\n", GetLastError());
-			break;
-
-		}
-	}
 	
 
+	auto server_awaiter = iot_monitoring::start_server(std::launch::async, "0.0.0.0:50055");
+	
+	//Poll into database
+	std::promise<void> sign;
+	std::shared_future<void> done(sign.get_future());
+	using namespace std::chrono_literals;
 
+	Poll poll_db(done, 2s);
+
+	static mongocxx::instance _inst{};
+	iot_monitoring::database::store* db = new iot_monitoring::database::store("mongodb+srv://concordia:iot-monitoring@iot-monitoring.qu31apk.mongodb.net/?retryWrites=true&w=majority", "iot");
+
+	auto future_poll = poll_db.start([&]() {
+		db_runner(db, _ps);
+	});
+	
+	if (thread_reader.joinable())
+		thread_reader.join();
+
+	server_awaiter.wait_for(std::chrono::seconds(5));
+
+	sign.set_value();
 
 	//Sync operation
 	/*iot_monitoring::serial ser(dev);

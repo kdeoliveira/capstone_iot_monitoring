@@ -4,10 +4,10 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Add source to this project's executable.
-add_executable (iot_monitoring_endpoint "iot_monitoring_endpoint.cpp" "iot_monitoring_endpoint.h" )
+add_executable (iot_monitoring_endpoint "iot_monitoring_endpoint.cpp" "iot_monitoring_endpoint.h"  "iot_reader.hpp" "iot_db_test.hpp" "packet_stream.hpp")
 
-add_executable (iot_db "iot_db_test.cxx")
-target_link_libraries(iot_db PUBLIC database)
+#add_executable (iot_db "iot_db_test.hpp" "iot_reader.hpp")
+#target_link_libraries(iot_db PUBLIC database)
 
 
 

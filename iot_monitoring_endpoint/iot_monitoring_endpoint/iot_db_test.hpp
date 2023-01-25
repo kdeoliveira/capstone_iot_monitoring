@@ -1,12 +1,12 @@
-
+#pragma once
 #include <database.hpp>
-
+#include <iostream>
 
 class TestSchema : public iot_monitoring::database::schema<int> {
 public:
 	TestSchema() : iot_monitoring::database::schema<int>(1,1){
 	}
-	TestSchema(uint64_t id, uint64_t t) : iot_monitoring::database::schema<int>(id, t) {
+	TestSchema(int64_t id, int64_t t) : iot_monitoring::database::schema<int>(id, t) {
 	}
 	virtual bsoncxx::document::value generate_document() override {
 		return bsoncxx::builder::basic::make_document(
@@ -52,23 +52,31 @@ public:
 	}
 };
 
-int main() {
-	static mongocxx::instance _inst{};
+void db_runner(iot_monitoring::database::store* db, PacketStream* _ps) {
 
-	iot_monitoring::database::store* db = new iot_monitoring::database::store("mongodb+srv://concordia:iot-monitoring@iot-monitoring.qu31apk.mongodb.net/?retryWrites=true&w=majority","iot");
-	iot_monitoring::database::schema<int> *doc =  new TestSchema();
+	if (_ps->empty())
+		return;
+
+	auto p = _ps->pop();
+
+	auto time_now = std::chrono::system_clock::now().time_since_epoch();
+
+	iot_monitoring::database::schema<int> *doc =  new TestSchema((int64_t)p.header.id, (int64_t)time_now.count());
+	doc->set_data(p.payload);
 
 	db->check_or_create_collection("extra");
 
-	bsoncxx::stdx::optional<mongocxx::result::insert_one> res = db->insert_value("sensors",doc);
+	db->insert_value("extra", doc);
 
-	auto x = db->get_by_id<TestSchema>(std::string("sensors"), 1);
+	std::cout << "Value inserted in database\n" << "Queue qty: " << _ps->size() << std::endl;
+
+	//bsoncxx::stdx::optional<mongocxx::result::insert_one> res = db->insert_value("sensors",doc);
+
+	//auto x = db->get_by_id<TestSchema>(std::string("sensors"), 1);
 
 	
-	iot_monitoring::database::schema<int>* holder = new HolderSchema(x->object_id);
+	//iot_monitoring::database::schema<int>* holder = new HolderSchema(x->object_id);
 
-	db->insert_value("extra", holder);
-	auto extradb = db->get_by_id<HolderSchema>("extra", 1);
-
-	return 0;
+	//db->insert_value("extra", holder);
+	//auto extradb = db->get_by_id<HolderSchema>("extra", 1);
 }

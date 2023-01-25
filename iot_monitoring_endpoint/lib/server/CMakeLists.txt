@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project("server")
 
 
-add_library(${PROJECT_NAME} STATIC "src/server.cxx")
+add_library(${PROJECT_NAME} STATIC "src/server.cxx" "./include/server.hpp")
 
 target_include_directories(${PROJECT_NAME} PRIVATE "./src")
 target_include_directories(${PROJECT_NAME} PRIVATE "./def")
