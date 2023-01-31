@@ -17,21 +17,28 @@ namespace iot_monitoring {
 
 		return grpc::Status::OK;
 	}
-	
-	std::future<void> start_server(std::shared_ptr<std::vector<data::device_info>> dev_info, std::shared_ptr<std::map<std::string, data::PacketStream>> data_queue, std::launch mode, const std::string& addr) {
+
+	static std::unique_ptr<grpc::Server> server;
+
+	void start_server(std::shared_ptr<std::vector<data::device_info>> dev_info, std::shared_ptr<std::map<std::string, data::PacketStream>> data_queue, std::launch mode, const std::string& addr) {
 		
+		grpc::EnableDefaultHealthCheckService(true);
 
 		RemoteEndopintServer service(dev_info, data_queue);
 
 		grpc::ServerBuilder builder;
 		builder.AddListeningPort(addr, grpc::InsecureServerCredentials());
 		builder.RegisterService(&service);
-		std::unique_ptr<grpc::Server> server = builder.BuildAndStart();
-		std::cout << "Server listening on address: " << addr << std::endl;
+		server = builder.BuildAndStart();
+		
+		//Function to asynchronously shutdown server should be passed
 		server->Wait();
-		return std::async(std::launch::deferred, [&]() {
+	}
+
+	void shutdown_server()
+	{
+		if (server.get() != nullptr)
 			server->Shutdown();
-			});
 	}
 
 	grpc::Status RemoteEndopintServer::ListDevices(::grpc::ServerContext*, const::models::Empty*, ::models::DeviceResponse* response)

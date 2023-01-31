@@ -10,20 +10,28 @@
 #include <sstream>
 #include "packet_stream.hpp"
 
+HANDLE event = ::CreateEvent(
+	nullptr,
+	true,
+	true,
+	nullptr
+);
+
 class Worker {
-private:
-	std::mutex _mut;
 protected:
+	std::mutex _mut;
+	std::promise<bool> promise;
 	std::shared_future<bool> signal;
 	std::function<void()> _fn;
 	virtual void tick() = 0;
 
 	void runner() {
-		std::unique_lock<std::mutex> lock{ this->_mut };
 		this->_fn();
 	}
 public:
-	Worker(std::shared_future<bool> fn) : signal{ fn }{ }
+	Worker(){
+		signal = promise.get_future();
+	}
 	template<class Lambda>
 	std::future<void> start(Lambda&& exec) {
 		this->_fn = std::forward<Lambda>(exec);
@@ -32,6 +40,19 @@ public:
 
 	std::future<void> start() {
 		return std::async(std::launch::async, &Worker::tick, this);
+	}
+
+	void stop() {
+		std::unique_lock<std::mutex> lock{ this->_mut };
+		this->promise = std::promise<bool>();
+		this->signal = this->promise.get_future();
+		this->promise.set_value(false);
+	}
+
+	void set_signal(bool val) {
+		std::unique_lock<std::mutex> lock{ this->_mut };
+		if(this->signal.valid())
+			this->promise.set_value(val);
 	}
 };
 
@@ -42,17 +63,17 @@ private:
 	
 	void tick() override{
 		std::future_status stats;
-
 		do{
 			stats = signal.wait_for(interval);
 			if (stats == std::future_status::timeout) {
+				std::unique_lock<std::mutex> lock{ this->_mut };
 				runner();
 			}
 		} while (stats != std::future_status::ready);
 	}
 
 public:
-	Poll(std::shared_future<bool> fn, std::chrono::seconds in) : Worker{ fn }, interval{ in }{}
+	Poll(std::chrono::seconds in) : interval{ in }{}
 };
 
 class Runner : public Worker {
@@ -78,9 +99,11 @@ private:
 			});
 
 		signal.wait();
+		
+		bool run = true;
 
-		while (signal.get()) {
 
+		do {
 			waiter = WaitForSingleObjectEx(
 				event,
 				INFINITE,
@@ -103,8 +126,13 @@ private:
 				break;
 
 			}
-		}
+			{
+				std::unique_lock<std::mutex> lock{ this->_mut };
+				run = signal.get();
+			}
+		} while (run);
+		
 	}
 public:
-	Runner(std::shared_future<bool> fn, std::shared_ptr<iot_monitoring::device> dev, std::map<std::string, iot_monitoring::data::PacketStream>* queue) : Worker{ fn }, _dev{ dev }, _queue{queue} {}
+	Runner(std::shared_ptr<iot_monitoring::device> dev, std::map<std::string, iot_monitoring::data::PacketStream>* queue) : _dev{ dev }, _queue{queue} {}
 };
