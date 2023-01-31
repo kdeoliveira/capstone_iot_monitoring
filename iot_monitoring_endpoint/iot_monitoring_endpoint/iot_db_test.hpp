@@ -52,12 +52,14 @@ public:
 	}
 };
 
-void db_runner(iot_monitoring::database::store* db, PacketStream* _ps) {
-
+void db_runner(iot_monitoring::database::store* db, std::map<std::string, iot_monitoring::data::PacketStream>* _ps) {
 	if (_ps->empty())
 		return;
 
-	auto p = _ps->pop();
+	auto iter = _ps->find("test");
+	if (iter == _ps->end() || iter->second.empty())
+		return;
+	auto p = iter->second.pop();
 
 	auto time_now = std::chrono::system_clock::now().time_since_epoch();
 

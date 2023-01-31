@@ -8,6 +8,20 @@
 
 namespace iot_monitoring {
 	namespace data {
+		enum status {
+			ON,
+			OFF,
+			NOT_FOUND,
+			FAIL,
+		};
+
+		struct device_info {
+			device_info() = default;
+			int id;
+			std::string hardware_id;
+			status hardware_status;
+		};
+
 		template<typename T>
 		struct header {
 			T id;

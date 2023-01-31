@@ -7,12 +7,22 @@
 #include <grpcpp/server_context.h>
 #include "models.grpc.pb.h"
 
+#include "packet_stream.hpp"
+#include <mutex>
+#include <algorithm>
+
 
 namespace iot_monitoring {
 	class RemoteEndopintServer final : public models::RemoteEndpoint::Service {
+	private:
+		std::shared_ptr<std::vector<data::device_info>> _device_queue;
+		std::shared_ptr<std::map<std::string, data::PacketStream>> _data_queue;
+		std::mutex _m;
 	public:
-		explicit RemoteEndopintServer();
+		explicit RemoteEndopintServer(std::shared_ptr<std::vector<data::device_info>>, std::shared_ptr<std::map<std::string, data::PacketStream>>);
 
 		grpc::Status GetServerInfo(::grpc::ServerContext*, const ::models::Empty*, ::models::ServerInfo*);
+		grpc::Status ListDevices(::grpc::ServerContext*, const ::models::Empty*, ::models::DeviceResponse*);
+		grpc::Status ReadPacket(::grpc::ServerContext*, const ::models::PacketRequest*, ::grpc::ServerWriter<::models::Packet>*);
 	};
 }

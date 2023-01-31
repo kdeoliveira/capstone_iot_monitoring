@@ -1,0 +1,2 @@
+obj\Debug/Models.cs \
+obj\Debug/ModelsGrpc.cs: ../../iot_monitoring_endpoint/lib/server/proto/models.proto

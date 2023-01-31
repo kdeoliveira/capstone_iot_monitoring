@@ -23,6 +23,8 @@ namespace models {
 
 static const char* RemoteEndpoint_method_names[] = {
   "/models.RemoteEndpoint/GetServerInfo",
+  "/models.RemoteEndpoint/ListDevices",
+  "/models.RemoteEndpoint/ReadPacket",
 };
 
 std::unique_ptr< RemoteEndpoint::Stub> RemoteEndpoint::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -33,6 +35,8 @@ std::unique_ptr< RemoteEndpoint::Stub> RemoteEndpoint::NewStub(const std::shared
 
 RemoteEndpoint::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_GetServerInfo_(RemoteEndpoint_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ListDevices_(RemoteEndpoint_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ReadPacket_(RemoteEndpoint_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::Status RemoteEndpoint::Stub::GetServerInfo(::grpc::ClientContext* context, const ::models::Empty& request, ::models::ServerInfo* response) {
@@ -58,6 +62,45 @@ void RemoteEndpoint::Stub::async::GetServerInfo(::grpc::ClientContext* context, 
   return result;
 }
 
+::grpc::Status RemoteEndpoint::Stub::ListDevices(::grpc::ClientContext* context, const ::models::Empty& request, ::models::DeviceResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::models::Empty, ::models::DeviceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ListDevices_, context, request, response);
+}
+
+void RemoteEndpoint::Stub::async::ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::models::Empty, ::models::DeviceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ListDevices_, context, request, response, std::move(f));
+}
+
+void RemoteEndpoint::Stub::async::ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ListDevices_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::models::DeviceResponse>* RemoteEndpoint::Stub::PrepareAsyncListDevicesRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::models::DeviceResponse, ::models::Empty, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ListDevices_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::models::DeviceResponse>* RemoteEndpoint::Stub::AsyncListDevicesRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncListDevicesRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::ClientReader< ::models::Packet>* RemoteEndpoint::Stub::ReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request) {
+  return ::grpc::internal::ClientReaderFactory< ::models::Packet>::Create(channel_.get(), rpcmethod_ReadPacket_, context, request);
+}
+
+void RemoteEndpoint::Stub::async::ReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest* request, ::grpc::ClientReadReactor< ::models::Packet>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::models::Packet>::Create(stub_->channel_.get(), stub_->rpcmethod_ReadPacket_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::models::Packet>* RemoteEndpoint::Stub::AsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::models::Packet>::Create(channel_.get(), cq, rpcmethod_ReadPacket_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::models::Packet>* RemoteEndpoint::Stub::PrepareAsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::models::Packet>::Create(channel_.get(), cq, rpcmethod_ReadPacket_, context, request, false, nullptr);
+}
+
 RemoteEndpoint::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RemoteEndpoint_method_names[0],
@@ -69,6 +112,26 @@ RemoteEndpoint::Service::Service() {
              ::models::ServerInfo* resp) {
                return service->GetServerInfo(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      RemoteEndpoint_method_names[1],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< RemoteEndpoint::Service, ::models::Empty, ::models::DeviceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](RemoteEndpoint::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::models::Empty* req,
+             ::models::DeviceResponse* resp) {
+               return service->ListDevices(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      RemoteEndpoint_method_names[2],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< RemoteEndpoint::Service, ::models::PacketRequest, ::models::Packet>(
+          [](RemoteEndpoint::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::models::PacketRequest* req,
+             ::grpc::ServerWriter<::models::Packet>* writer) {
+               return service->ReadPacket(ctx, req, writer);
+             }, this)));
 }
 
 RemoteEndpoint::Service::~Service() {
@@ -78,6 +141,20 @@ RemoteEndpoint::Service::~Service() {
   (void) context;
   (void) request;
   (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status RemoteEndpoint::Service::ListDevices(::grpc::ServerContext* context, const ::models::Empty* request, ::models::DeviceResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status RemoteEndpoint::Service::ReadPacket(::grpc::ServerContext* context, const ::models::PacketRequest* request, ::grpc::ServerWriter< ::models::Packet>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

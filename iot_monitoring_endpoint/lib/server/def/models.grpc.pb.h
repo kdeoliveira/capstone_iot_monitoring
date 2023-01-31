@@ -42,11 +42,30 @@ class RemoteEndpoint final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::models::ServerInfo>> PrepareAsyncGetServerInfo(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::models::ServerInfo>>(PrepareAsyncGetServerInfoRaw(context, request, cq));
     }
+    virtual ::grpc::Status ListDevices(::grpc::ClientContext* context, const ::models::Empty& request, ::models::DeviceResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::models::DeviceResponse>> AsyncListDevices(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::models::DeviceResponse>>(AsyncListDevicesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::models::DeviceResponse>> PrepareAsyncListDevices(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::models::DeviceResponse>>(PrepareAsyncListDevicesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::models::Packet>> ReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::models::Packet>>(ReadPacketRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::models::Packet>> AsyncReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::models::Packet>>(AsyncReadPacketRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::models::Packet>> PrepareAsyncReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::models::Packet>>(PrepareAsyncReadPacketRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
       virtual void GetServerInfo(::grpc::ClientContext* context, const ::models::Empty* request, ::models::ServerInfo* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetServerInfo(::grpc::ClientContext* context, const ::models::Empty* request, ::models::ServerInfo* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void ReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest* request, ::grpc::ClientReadReactor< ::models::Packet>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -54,6 +73,11 @@ class RemoteEndpoint final {
    private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::models::ServerInfo>* AsyncGetServerInfoRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::models::ServerInfo>* PrepareAsyncGetServerInfoRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::models::DeviceResponse>* AsyncListDevicesRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::models::DeviceResponse>* PrepareAsyncListDevicesRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::models::Packet>* ReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::models::Packet>* AsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::models::Packet>* PrepareAsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -65,11 +89,30 @@ class RemoteEndpoint final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::models::ServerInfo>> PrepareAsyncGetServerInfo(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::models::ServerInfo>>(PrepareAsyncGetServerInfoRaw(context, request, cq));
     }
+    ::grpc::Status ListDevices(::grpc::ClientContext* context, const ::models::Empty& request, ::models::DeviceResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::models::DeviceResponse>> AsyncListDevices(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::models::DeviceResponse>>(AsyncListDevicesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::models::DeviceResponse>> PrepareAsyncListDevices(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::models::DeviceResponse>>(PrepareAsyncListDevicesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientReader< ::models::Packet>> ReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::models::Packet>>(ReadPacketRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::models::Packet>> AsyncReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::models::Packet>>(AsyncReadPacketRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::models::Packet>> PrepareAsyncReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::models::Packet>>(PrepareAsyncReadPacketRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
       void GetServerInfo(::grpc::ClientContext* context, const ::models::Empty* request, ::models::ServerInfo* response, std::function<void(::grpc::Status)>) override;
       void GetServerInfo(::grpc::ClientContext* context, const ::models::Empty* request, ::models::ServerInfo* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, std::function<void(::grpc::Status)>) override;
+      void ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest* request, ::grpc::ClientReadReactor< ::models::Packet>* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -83,7 +126,14 @@ class RemoteEndpoint final {
     class async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::models::ServerInfo>* AsyncGetServerInfoRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::models::ServerInfo>* PrepareAsyncGetServerInfoRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::models::DeviceResponse>* AsyncListDevicesRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::models::DeviceResponse>* PrepareAsyncListDevicesRaw(::grpc::ClientContext* context, const ::models::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::models::Packet>* ReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request) override;
+    ::grpc::ClientAsyncReader< ::models::Packet>* AsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::models::Packet>* PrepareAsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_GetServerInfo_;
+    const ::grpc::internal::RpcMethod rpcmethod_ListDevices_;
+    const ::grpc::internal::RpcMethod rpcmethod_ReadPacket_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -92,6 +142,8 @@ class RemoteEndpoint final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status GetServerInfo(::grpc::ServerContext* context, const ::models::Empty* request, ::models::ServerInfo* response);
+    virtual ::grpc::Status ListDevices(::grpc::ServerContext* context, const ::models::Empty* request, ::models::DeviceResponse* response);
+    virtual ::grpc::Status ReadPacket(::grpc::ServerContext* context, const ::models::PacketRequest* request, ::grpc::ServerWriter< ::models::Packet>* writer);
   };
   template <class BaseClass>
   class WithAsyncMethod_GetServerInfo : public BaseClass {
@@ -113,7 +165,47 @@ class RemoteEndpoint final {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_GetServerInfo<Service > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_ListDevices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ListDevices() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_ListDevices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListDevices(::grpc::ServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::DeviceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestListDevices(::grpc::ServerContext* context, ::models::Empty* request, ::grpc::ServerAsyncResponseWriter< ::models::DeviceResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_ReadPacket : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ReadPacket() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_ReadPacket() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadPacket(::grpc::ServerContext* /*context*/, const ::models::PacketRequest* /*request*/, ::grpc::ServerWriter< ::models::Packet>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestReadPacket(::grpc::ServerContext* context, ::models::PacketRequest* request, ::grpc::ServerAsyncWriter< ::models::Packet>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_GetServerInfo<WithAsyncMethod_ListDevices<WithAsyncMethod_ReadPacket<Service > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_GetServerInfo : public BaseClass {
    private:
@@ -141,7 +233,56 @@ class RemoteEndpoint final {
     virtual ::grpc::ServerUnaryReactor* GetServerInfo(
       ::grpc::CallbackServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::ServerInfo* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_GetServerInfo<Service > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_ListDevices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_ListDevices() {
+      ::grpc::Service::MarkMethodCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::models::Empty, ::models::DeviceResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::models::Empty* request, ::models::DeviceResponse* response) { return this->ListDevices(context, request, response); }));}
+    void SetMessageAllocatorFor_ListDevices(
+        ::grpc::MessageAllocator< ::models::Empty, ::models::DeviceResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::models::Empty, ::models::DeviceResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_ListDevices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListDevices(::grpc::ServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::DeviceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ListDevices(
+      ::grpc::CallbackServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::DeviceResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_ReadPacket : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_ReadPacket() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::models::PacketRequest, ::models::Packet>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::models::PacketRequest* request) { return this->ReadPacket(context, request); }));
+    }
+    ~WithCallbackMethod_ReadPacket() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadPacket(::grpc::ServerContext* /*context*/, const ::models::PacketRequest* /*request*/, ::grpc::ServerWriter< ::models::Packet>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::models::Packet>* ReadPacket(
+      ::grpc::CallbackServerContext* /*context*/, const ::models::PacketRequest* /*request*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_GetServerInfo<WithCallbackMethod_ListDevices<WithCallbackMethod_ReadPacket<Service > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_GetServerInfo : public BaseClass {
@@ -156,6 +297,40 @@ class RemoteEndpoint final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetServerInfo(::grpc::ServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::ServerInfo* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_ListDevices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ListDevices() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_ListDevices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListDevices(::grpc::ServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::DeviceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_ReadPacket : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ReadPacket() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_ReadPacket() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadPacket(::grpc::ServerContext* /*context*/, const ::models::PacketRequest* /*request*/, ::grpc::ServerWriter< ::models::Packet>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -181,6 +356,46 @@ class RemoteEndpoint final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_ListDevices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ListDevices() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_ListDevices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListDevices(::grpc::ServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::DeviceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestListDevices(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_ReadPacket : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ReadPacket() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_ReadPacket() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadPacket(::grpc::ServerContext* /*context*/, const ::models::PacketRequest* /*request*/, ::grpc::ServerWriter< ::models::Packet>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestReadPacket(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_GetServerInfo : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -201,6 +416,50 @@ class RemoteEndpoint final {
     }
     virtual ::grpc::ServerUnaryReactor* GetServerInfo(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_ListDevices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_ListDevices() {
+      ::grpc::Service::MarkMethodRawCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ListDevices(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_ListDevices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListDevices(::grpc::ServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::DeviceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ListDevices(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_ReadPacket : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_ReadPacket() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->ReadPacket(context, request); }));
+    }
+    ~WithRawCallbackMethod_ReadPacket() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadPacket(::grpc::ServerContext* /*context*/, const ::models::PacketRequest* /*request*/, ::grpc::ServerWriter< ::models::Packet>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* ReadPacket(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetServerInfo : public BaseClass {
@@ -229,9 +488,63 @@ class RemoteEndpoint final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetServerInfo(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::models::Empty,::models::ServerInfo>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_GetServerInfo<Service > StreamedUnaryService;
-  typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_GetServerInfo<Service > StreamedService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_ListDevices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_ListDevices() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::models::Empty, ::models::DeviceResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::models::Empty, ::models::DeviceResponse>* streamer) {
+                       return this->StreamedListDevices(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_ListDevices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ListDevices(::grpc::ServerContext* /*context*/, const ::models::Empty* /*request*/, ::models::DeviceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedListDevices(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::models::Empty,::models::DeviceResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_GetServerInfo<WithStreamedUnaryMethod_ListDevices<Service > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithSplitStreamingMethod_ReadPacket : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithSplitStreamingMethod_ReadPacket() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::models::PacketRequest, ::models::Packet>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerSplitStreamer<
+                     ::models::PacketRequest, ::models::Packet>* streamer) {
+                       return this->StreamedReadPacket(context,
+                         streamer);
+                  }));
+    }
+    ~WithSplitStreamingMethod_ReadPacket() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ReadPacket(::grpc::ServerContext* /*context*/, const ::models::PacketRequest* /*request*/, ::grpc::ServerWriter< ::models::Packet>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with split streamed
+    virtual ::grpc::Status StreamedReadPacket(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::models::PacketRequest,::models::Packet>* server_split_streamer) = 0;
+  };
+  typedef WithSplitStreamingMethod_ReadPacket<Service > SplitStreamedService;
+  typedef WithStreamedUnaryMethod_GetServerInfo<WithStreamedUnaryMethod_ListDevices<WithSplitStreamingMethod_ReadPacket<Service > > > StreamedService;
 };
 
 }  // namespace models

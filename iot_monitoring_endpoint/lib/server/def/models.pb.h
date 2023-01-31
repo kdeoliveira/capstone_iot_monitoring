@@ -30,6 +30,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -46,19 +47,91 @@ struct TableStruct_models_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_models_2eproto;
 namespace models {
+class Device;
+struct DeviceDefaultTypeInternal;
+extern DeviceDefaultTypeInternal _Device_default_instance_;
+class DeviceResponse;
+struct DeviceResponseDefaultTypeInternal;
+extern DeviceResponseDefaultTypeInternal _DeviceResponse_default_instance_;
 class Empty;
 struct EmptyDefaultTypeInternal;
 extern EmptyDefaultTypeInternal _Empty_default_instance_;
+class Packet;
+struct PacketDefaultTypeInternal;
+extern PacketDefaultTypeInternal _Packet_default_instance_;
+class PacketRequest;
+struct PacketRequestDefaultTypeInternal;
+extern PacketRequestDefaultTypeInternal _PacketRequest_default_instance_;
 class ServerInfo;
 struct ServerInfoDefaultTypeInternal;
 extern ServerInfoDefaultTypeInternal _ServerInfo_default_instance_;
 }  // namespace models
 PROTOBUF_NAMESPACE_OPEN
+template<> ::models::Device* Arena::CreateMaybeMessage<::models::Device>(Arena*);
+template<> ::models::DeviceResponse* Arena::CreateMaybeMessage<::models::DeviceResponse>(Arena*);
 template<> ::models::Empty* Arena::CreateMaybeMessage<::models::Empty>(Arena*);
+template<> ::models::Packet* Arena::CreateMaybeMessage<::models::Packet>(Arena*);
+template<> ::models::PacketRequest* Arena::CreateMaybeMessage<::models::PacketRequest>(Arena*);
 template<> ::models::ServerInfo* Arena::CreateMaybeMessage<::models::ServerInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace models {
 
+enum STATUS : int {
+  NOT_FOUND = 0,
+  OFF = 1,
+  ON = 2,
+  CONNECTING = 3,
+  FAIL = 4,
+  UNKNOWN = 5,
+  STATUS_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  STATUS_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool STATUS_IsValid(int value);
+constexpr STATUS STATUS_MIN = NOT_FOUND;
+constexpr STATUS STATUS_MAX = UNKNOWN;
+constexpr int STATUS_ARRAYSIZE = STATUS_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* STATUS_descriptor();
+template<typename T>
+inline const std::string& STATUS_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, STATUS>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function STATUS_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    STATUS_descriptor(), enum_t_value);
+}
+inline bool STATUS_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, STATUS* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<STATUS>(
+    STATUS_descriptor(), name, value);
+}
+enum TYPE : int {
+  TIMESTAMP = 0,
+  REAL = 1,
+  STRING = 2,
+  ERROR = 3,
+  TYPE_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  TYPE_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool TYPE_IsValid(int value);
+constexpr TYPE TYPE_MIN = TIMESTAMP;
+constexpr TYPE TYPE_MAX = ERROR;
+constexpr int TYPE_ARRAYSIZE = TYPE_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* TYPE_descriptor();
+template<typename T>
+inline const std::string& TYPE_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, TYPE>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function TYPE_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    TYPE_descriptor(), enum_t_value);
+}
+inline bool TYPE_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, TYPE* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<TYPE>(
+    TYPE_descriptor(), name, value);
+}
 // ===================================================================
 
 class ServerInfo final :
@@ -231,6 +304,694 @@ class ServerInfo final :
 };
 // -------------------------------------------------------------------
 
+class Device final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:models.Device) */ {
+ public:
+  inline Device() : Device(nullptr) {}
+  ~Device() override;
+  explicit PROTOBUF_CONSTEXPR Device(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Device(const Device& from);
+  Device(Device&& from) noexcept
+    : Device() {
+    *this = ::std::move(from);
+  }
+
+  inline Device& operator=(const Device& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Device& operator=(Device&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Device& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Device* internal_default_instance() {
+    return reinterpret_cast<const Device*>(
+               &_Device_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(Device& a, Device& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Device* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Device* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Device* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Device>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Device& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Device& from) {
+    Device::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Device* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "models.Device";
+  }
+  protected:
+  explicit Device(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kHardwareIdFieldNumber = 2,
+    kIdFieldNumber = 1,
+    kStatusFieldNumber = 3,
+  };
+  // string hardware_id = 2;
+  void clear_hardware_id();
+  const std::string& hardware_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_hardware_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_hardware_id();
+  PROTOBUF_NODISCARD std::string* release_hardware_id();
+  void set_allocated_hardware_id(std::string* hardware_id);
+  private:
+  const std::string& _internal_hardware_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_hardware_id(const std::string& value);
+  std::string* _internal_mutable_hardware_id();
+  public:
+
+  // int32 id = 1;
+  void clear_id();
+  int32_t id() const;
+  void set_id(int32_t value);
+  private:
+  int32_t _internal_id() const;
+  void _internal_set_id(int32_t value);
+  public:
+
+  // .models.STATUS status = 3;
+  void clear_status();
+  ::models::STATUS status() const;
+  void set_status(::models::STATUS value);
+  private:
+  ::models::STATUS _internal_status() const;
+  void _internal_set_status(::models::STATUS value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:models.Device)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr hardware_id_;
+    int32_t id_;
+    int status_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_models_2eproto;
+};
+// -------------------------------------------------------------------
+
+class DeviceResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:models.DeviceResponse) */ {
+ public:
+  inline DeviceResponse() : DeviceResponse(nullptr) {}
+  ~DeviceResponse() override;
+  explicit PROTOBUF_CONSTEXPR DeviceResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  DeviceResponse(const DeviceResponse& from);
+  DeviceResponse(DeviceResponse&& from) noexcept
+    : DeviceResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline DeviceResponse& operator=(const DeviceResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DeviceResponse& operator=(DeviceResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DeviceResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DeviceResponse* internal_default_instance() {
+    return reinterpret_cast<const DeviceResponse*>(
+               &_DeviceResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(DeviceResponse& a, DeviceResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DeviceResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DeviceResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  DeviceResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DeviceResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const DeviceResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const DeviceResponse& from) {
+    DeviceResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DeviceResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "models.DeviceResponse";
+  }
+  protected:
+  explicit DeviceResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDeviceFieldNumber = 2,
+    kSizeFieldNumber = 1,
+  };
+  // repeated .models.Device device = 2;
+  int device_size() const;
+  private:
+  int _internal_device_size() const;
+  public:
+  void clear_device();
+  ::models::Device* mutable_device(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::models::Device >*
+      mutable_device();
+  private:
+  const ::models::Device& _internal_device(int index) const;
+  ::models::Device* _internal_add_device();
+  public:
+  const ::models::Device& device(int index) const;
+  ::models::Device* add_device();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::models::Device >&
+      device() const;
+
+  // int32 size = 1;
+  void clear_size();
+  int32_t size() const;
+  void set_size(int32_t value);
+  private:
+  int32_t _internal_size() const;
+  void _internal_set_size(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:models.DeviceResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::models::Device > device_;
+    int32_t size_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_models_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Packet final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:models.Packet) */ {
+ public:
+  inline Packet() : Packet(nullptr) {}
+  ~Packet() override;
+  explicit PROTOBUF_CONSTEXPR Packet(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Packet(const Packet& from);
+  Packet(Packet&& from) noexcept
+    : Packet() {
+    *this = ::std::move(from);
+  }
+
+  inline Packet& operator=(const Packet& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Packet& operator=(Packet&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Packet& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Packet* internal_default_instance() {
+    return reinterpret_cast<const Packet*>(
+               &_Packet_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(Packet& a, Packet& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Packet* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Packet* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Packet* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Packet>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Packet& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Packet& from) {
+    Packet::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Packet* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "models.Packet";
+  }
+  protected:
+  explicit Packet(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDataFieldNumber = 4,
+    kTimestampFieldNumber = 2,
+    kIdFieldNumber = 1,
+    kTypeFieldNumber = 3,
+  };
+  // bytes data = 4;
+  void clear_data();
+  const std::string& data() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_data(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_data();
+  PROTOBUF_NODISCARD std::string* release_data();
+  void set_allocated_data(std::string* data);
+  private:
+  const std::string& _internal_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
+  std::string* _internal_mutable_data();
+  public:
+
+  // int64 timestamp = 2;
+  void clear_timestamp();
+  int64_t timestamp() const;
+  void set_timestamp(int64_t value);
+  private:
+  int64_t _internal_timestamp() const;
+  void _internal_set_timestamp(int64_t value);
+  public:
+
+  // int32 id = 1;
+  void clear_id();
+  int32_t id() const;
+  void set_id(int32_t value);
+  private:
+  int32_t _internal_id() const;
+  void _internal_set_id(int32_t value);
+  public:
+
+  // .models.TYPE type = 3;
+  void clear_type();
+  ::models::TYPE type() const;
+  void set_type(::models::TYPE value);
+  private:
+  ::models::TYPE _internal_type() const;
+  void _internal_set_type(::models::TYPE value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:models.Packet)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    int64_t timestamp_;
+    int32_t id_;
+    int type_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_models_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PacketRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:models.PacketRequest) */ {
+ public:
+  inline PacketRequest() : PacketRequest(nullptr) {}
+  ~PacketRequest() override;
+  explicit PROTOBUF_CONSTEXPR PacketRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PacketRequest(const PacketRequest& from);
+  PacketRequest(PacketRequest&& from) noexcept
+    : PacketRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline PacketRequest& operator=(const PacketRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PacketRequest& operator=(PacketRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PacketRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PacketRequest* internal_default_instance() {
+    return reinterpret_cast<const PacketRequest*>(
+               &_PacketRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(PacketRequest& a, PacketRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PacketRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PacketRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PacketRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PacketRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PacketRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PacketRequest& from) {
+    PacketRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PacketRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "models.PacketRequest";
+  }
+  protected:
+  explicit PacketRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTimestampFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // int64 timestamp = 2;
+  void clear_timestamp();
+  int64_t timestamp() const;
+  void set_timestamp(int64_t value);
+  private:
+  int64_t _internal_timestamp() const;
+  void _internal_set_timestamp(int64_t value);
+  public:
+
+  // int32 id = 1;
+  void clear_id();
+  int32_t id() const;
+  void set_id(int32_t value);
+  private:
+  int32_t _internal_id() const;
+  void _internal_set_id(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:models.PacketRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int64_t timestamp_;
+    int32_t id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_models_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Empty final :
     public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:models.Empty) */ {
  public:
@@ -278,7 +1039,7 @@ class Empty final :
                &_Empty_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    5;
 
   friend void swap(Empty& a, Empty& b) {
     a.Swap(&b);
@@ -420,6 +1181,322 @@ inline void ServerInfo::set_rpc(int32_t value) {
 
 // -------------------------------------------------------------------
 
+// Device
+
+// int32 id = 1;
+inline void Device::clear_id() {
+  _impl_.id_ = 0;
+}
+inline int32_t Device::_internal_id() const {
+  return _impl_.id_;
+}
+inline int32_t Device::id() const {
+  // @@protoc_insertion_point(field_get:models.Device.id)
+  return _internal_id();
+}
+inline void Device::_internal_set_id(int32_t value) {
+  
+  _impl_.id_ = value;
+}
+inline void Device::set_id(int32_t value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:models.Device.id)
+}
+
+// string hardware_id = 2;
+inline void Device::clear_hardware_id() {
+  _impl_.hardware_id_.ClearToEmpty();
+}
+inline const std::string& Device::hardware_id() const {
+  // @@protoc_insertion_point(field_get:models.Device.hardware_id)
+  return _internal_hardware_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Device::set_hardware_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.hardware_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:models.Device.hardware_id)
+}
+inline std::string* Device::mutable_hardware_id() {
+  std::string* _s = _internal_mutable_hardware_id();
+  // @@protoc_insertion_point(field_mutable:models.Device.hardware_id)
+  return _s;
+}
+inline const std::string& Device::_internal_hardware_id() const {
+  return _impl_.hardware_id_.Get();
+}
+inline void Device::_internal_set_hardware_id(const std::string& value) {
+  
+  _impl_.hardware_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Device::_internal_mutable_hardware_id() {
+  
+  return _impl_.hardware_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Device::release_hardware_id() {
+  // @@protoc_insertion_point(field_release:models.Device.hardware_id)
+  return _impl_.hardware_id_.Release();
+}
+inline void Device::set_allocated_hardware_id(std::string* hardware_id) {
+  if (hardware_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.hardware_id_.SetAllocated(hardware_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.hardware_id_.IsDefault()) {
+    _impl_.hardware_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:models.Device.hardware_id)
+}
+
+// .models.STATUS status = 3;
+inline void Device::clear_status() {
+  _impl_.status_ = 0;
+}
+inline ::models::STATUS Device::_internal_status() const {
+  return static_cast< ::models::STATUS >(_impl_.status_);
+}
+inline ::models::STATUS Device::status() const {
+  // @@protoc_insertion_point(field_get:models.Device.status)
+  return _internal_status();
+}
+inline void Device::_internal_set_status(::models::STATUS value) {
+  
+  _impl_.status_ = value;
+}
+inline void Device::set_status(::models::STATUS value) {
+  _internal_set_status(value);
+  // @@protoc_insertion_point(field_set:models.Device.status)
+}
+
+// -------------------------------------------------------------------
+
+// DeviceResponse
+
+// int32 size = 1;
+inline void DeviceResponse::clear_size() {
+  _impl_.size_ = 0;
+}
+inline int32_t DeviceResponse::_internal_size() const {
+  return _impl_.size_;
+}
+inline int32_t DeviceResponse::size() const {
+  // @@protoc_insertion_point(field_get:models.DeviceResponse.size)
+  return _internal_size();
+}
+inline void DeviceResponse::_internal_set_size(int32_t value) {
+  
+  _impl_.size_ = value;
+}
+inline void DeviceResponse::set_size(int32_t value) {
+  _internal_set_size(value);
+  // @@protoc_insertion_point(field_set:models.DeviceResponse.size)
+}
+
+// repeated .models.Device device = 2;
+inline int DeviceResponse::_internal_device_size() const {
+  return _impl_.device_.size();
+}
+inline int DeviceResponse::device_size() const {
+  return _internal_device_size();
+}
+inline void DeviceResponse::clear_device() {
+  _impl_.device_.Clear();
+}
+inline ::models::Device* DeviceResponse::mutable_device(int index) {
+  // @@protoc_insertion_point(field_mutable:models.DeviceResponse.device)
+  return _impl_.device_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::models::Device >*
+DeviceResponse::mutable_device() {
+  // @@protoc_insertion_point(field_mutable_list:models.DeviceResponse.device)
+  return &_impl_.device_;
+}
+inline const ::models::Device& DeviceResponse::_internal_device(int index) const {
+  return _impl_.device_.Get(index);
+}
+inline const ::models::Device& DeviceResponse::device(int index) const {
+  // @@protoc_insertion_point(field_get:models.DeviceResponse.device)
+  return _internal_device(index);
+}
+inline ::models::Device* DeviceResponse::_internal_add_device() {
+  return _impl_.device_.Add();
+}
+inline ::models::Device* DeviceResponse::add_device() {
+  ::models::Device* _add = _internal_add_device();
+  // @@protoc_insertion_point(field_add:models.DeviceResponse.device)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::models::Device >&
+DeviceResponse::device() const {
+  // @@protoc_insertion_point(field_list:models.DeviceResponse.device)
+  return _impl_.device_;
+}
+
+// -------------------------------------------------------------------
+
+// Packet
+
+// int32 id = 1;
+inline void Packet::clear_id() {
+  _impl_.id_ = 0;
+}
+inline int32_t Packet::_internal_id() const {
+  return _impl_.id_;
+}
+inline int32_t Packet::id() const {
+  // @@protoc_insertion_point(field_get:models.Packet.id)
+  return _internal_id();
+}
+inline void Packet::_internal_set_id(int32_t value) {
+  
+  _impl_.id_ = value;
+}
+inline void Packet::set_id(int32_t value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:models.Packet.id)
+}
+
+// int64 timestamp = 2;
+inline void Packet::clear_timestamp() {
+  _impl_.timestamp_ = int64_t{0};
+}
+inline int64_t Packet::_internal_timestamp() const {
+  return _impl_.timestamp_;
+}
+inline int64_t Packet::timestamp() const {
+  // @@protoc_insertion_point(field_get:models.Packet.timestamp)
+  return _internal_timestamp();
+}
+inline void Packet::_internal_set_timestamp(int64_t value) {
+  
+  _impl_.timestamp_ = value;
+}
+inline void Packet::set_timestamp(int64_t value) {
+  _internal_set_timestamp(value);
+  // @@protoc_insertion_point(field_set:models.Packet.timestamp)
+}
+
+// .models.TYPE type = 3;
+inline void Packet::clear_type() {
+  _impl_.type_ = 0;
+}
+inline ::models::TYPE Packet::_internal_type() const {
+  return static_cast< ::models::TYPE >(_impl_.type_);
+}
+inline ::models::TYPE Packet::type() const {
+  // @@protoc_insertion_point(field_get:models.Packet.type)
+  return _internal_type();
+}
+inline void Packet::_internal_set_type(::models::TYPE value) {
+  
+  _impl_.type_ = value;
+}
+inline void Packet::set_type(::models::TYPE value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:models.Packet.type)
+}
+
+// bytes data = 4;
+inline void Packet::clear_data() {
+  _impl_.data_.ClearToEmpty();
+}
+inline const std::string& Packet::data() const {
+  // @@protoc_insertion_point(field_get:models.Packet.data)
+  return _internal_data();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Packet::set_data(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:models.Packet.data)
+}
+inline std::string* Packet::mutable_data() {
+  std::string* _s = _internal_mutable_data();
+  // @@protoc_insertion_point(field_mutable:models.Packet.data)
+  return _s;
+}
+inline const std::string& Packet::_internal_data() const {
+  return _impl_.data_.Get();
+}
+inline void Packet::_internal_set_data(const std::string& value) {
+  
+  _impl_.data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Packet::_internal_mutable_data() {
+  
+  return _impl_.data_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Packet::release_data() {
+  // @@protoc_insertion_point(field_release:models.Packet.data)
+  return _impl_.data_.Release();
+}
+inline void Packet::set_allocated_data(std::string* data) {
+  if (data != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.data_.IsDefault()) {
+    _impl_.data_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:models.Packet.data)
+}
+
+// -------------------------------------------------------------------
+
+// PacketRequest
+
+// int32 id = 1;
+inline void PacketRequest::clear_id() {
+  _impl_.id_ = 0;
+}
+inline int32_t PacketRequest::_internal_id() const {
+  return _impl_.id_;
+}
+inline int32_t PacketRequest::id() const {
+  // @@protoc_insertion_point(field_get:models.PacketRequest.id)
+  return _internal_id();
+}
+inline void PacketRequest::_internal_set_id(int32_t value) {
+  
+  _impl_.id_ = value;
+}
+inline void PacketRequest::set_id(int32_t value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:models.PacketRequest.id)
+}
+
+// int64 timestamp = 2;
+inline void PacketRequest::clear_timestamp() {
+  _impl_.timestamp_ = int64_t{0};
+}
+inline int64_t PacketRequest::_internal_timestamp() const {
+  return _impl_.timestamp_;
+}
+inline int64_t PacketRequest::timestamp() const {
+  // @@protoc_insertion_point(field_get:models.PacketRequest.timestamp)
+  return _internal_timestamp();
+}
+inline void PacketRequest::_internal_set_timestamp(int64_t value) {
+  
+  _impl_.timestamp_ = value;
+}
+inline void PacketRequest::set_timestamp(int64_t value) {
+  _internal_set_timestamp(value);
+  // @@protoc_insertion_point(field_set:models.PacketRequest.timestamp)
+}
+
+// -------------------------------------------------------------------
+
 // Empty
 
 #ifdef __GNUC__
@@ -427,10 +1504,33 @@ inline void ServerInfo::set_rpc(int32_t value) {
 #endif  // __GNUC__
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace models
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::models::STATUS> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::models::STATUS>() {
+  return ::models::STATUS_descriptor();
+}
+template <> struct is_proto_enum< ::models::TYPE> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::models::TYPE>() {
+  return ::models::TYPE_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

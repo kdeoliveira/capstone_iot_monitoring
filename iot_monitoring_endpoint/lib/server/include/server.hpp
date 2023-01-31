@@ -1,6 +1,13 @@
 #pragma once
+
 #include <future>
+#include <string>
+#include <packet.hpp>
+#include <packet_stream.hpp>
+#include <functional>
+#include <map>
 
 namespace iot_monitoring {
-	std::future<void> start_server(std::launch mode, const std::string& addr);
+	std::future<void> start_server(std::shared_ptr<std::vector<data::device_info>>, std::shared_ptr<std::map<std::string, data::PacketStream>>,std::launch, const std::string&);
+	
 }

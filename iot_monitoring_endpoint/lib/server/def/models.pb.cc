@@ -36,6 +36,65 @@ struct ServerInfoDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ServerInfoDefaultTypeInternal _ServerInfo_default_instance_;
+PROTOBUF_CONSTEXPR Device::Device(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.hardware_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.id_)*/0
+  , /*decltype(_impl_.status_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct DeviceDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DeviceDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DeviceDefaultTypeInternal() {}
+  union {
+    Device _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DeviceDefaultTypeInternal _Device_default_instance_;
+PROTOBUF_CONSTEXPR DeviceResponse::DeviceResponse(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.device_)*/{}
+  , /*decltype(_impl_.size_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct DeviceResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DeviceResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DeviceResponseDefaultTypeInternal() {}
+  union {
+    DeviceResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DeviceResponseDefaultTypeInternal _DeviceResponse_default_instance_;
+PROTOBUF_CONSTEXPR Packet::Packet(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.data_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.timestamp_)*/int64_t{0}
+  , /*decltype(_impl_.id_)*/0
+  , /*decltype(_impl_.type_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct PacketDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PacketDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PacketDefaultTypeInternal() {}
+  union {
+    Packet _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PacketDefaultTypeInternal _Packet_default_instance_;
+PROTOBUF_CONSTEXPR PacketRequest::PacketRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.timestamp_)*/int64_t{0}
+  , /*decltype(_impl_.id_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct PacketRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PacketRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PacketRequestDefaultTypeInternal() {}
+  union {
+    PacketRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PacketRequestDefaultTypeInternal _PacketRequest_default_instance_;
 PROTOBUF_CONSTEXPR Empty::Empty(
     ::_pbi::ConstantInitialized) {}
 struct EmptyDefaultTypeInternal {
@@ -48,8 +107,8 @@ struct EmptyDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyDefaultTypeInternal _Empty_default_instance_;
 }  // namespace models
-static ::_pb::Metadata file_level_metadata_models_2eproto[2];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_models_2eproto = nullptr;
+static ::_pb::Metadata file_level_metadata_models_2eproto[6];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_models_2eproto[2];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_models_2eproto = nullptr;
 
 const uint32_t TableStruct_models_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -63,6 +122,41 @@ const uint32_t TableStruct_models_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::models::ServerInfo, _impl_.minor_),
   PROTOBUF_FIELD_OFFSET(::models::ServerInfo, _impl_.rpc_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::models::Device, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::models::Device, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::models::Device, _impl_.hardware_id_),
+  PROTOBUF_FIELD_OFFSET(::models::Device, _impl_.status_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::models::DeviceResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::models::DeviceResponse, _impl_.size_),
+  PROTOBUF_FIELD_OFFSET(::models::DeviceResponse, _impl_.device_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::models::Packet, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::models::Packet, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::models::Packet, _impl_.timestamp_),
+  PROTOBUF_FIELD_OFFSET(::models::Packet, _impl_.type_),
+  PROTOBUF_FIELD_OFFSET(::models::Packet, _impl_.data_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::models::PacketRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::models::PacketRequest, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::models::PacketRequest, _impl_.timestamp_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::models::Empty, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -71,26 +165,47 @@ const uint32_t TableStruct_models_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::models::ServerInfo)},
-  { 9, -1, -1, sizeof(::models::Empty)},
+  { 9, -1, -1, sizeof(::models::Device)},
+  { 18, -1, -1, sizeof(::models::DeviceResponse)},
+  { 26, -1, -1, sizeof(::models::Packet)},
+  { 36, -1, -1, sizeof(::models::PacketRequest)},
+  { 44, -1, -1, sizeof(::models::Empty)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::models::_ServerInfo_default_instance_._instance,
+  &::models::_Device_default_instance_._instance,
+  &::models::_DeviceResponse_default_instance_._instance,
+  &::models::_Packet_default_instance_._instance,
+  &::models::_PacketRequest_default_instance_._instance,
   &::models::_Empty_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_models_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\014models.proto\022\006models\"7\n\nServerInfo\022\r\n\005"
   "major\030\001 \001(\005\022\r\n\005minor\030\002 \001(\005\022\013\n\003rpc\030\003 \001(\005\""
-  "\007\n\005Empty2F\n\016RemoteEndpoint\0224\n\rGetServerI"
-  "nfo\022\r.models.Empty\032\022.models.ServerInfo\"\000"
-  "B\021\252\002\016IOT.Monitoringb\006proto3"
+  "I\n\006Device\022\n\n\002id\030\001 \001(\005\022\023\n\013hardware_id\030\002 \001"
+  "(\t\022\036\n\006status\030\003 \001(\0162\016.models.STATUS\">\n\016De"
+  "viceResponse\022\014\n\004size\030\001 \001(\005\022\036\n\006device\030\002 \003"
+  "(\0132\016.models.Device\"Q\n\006Packet\022\n\n\002id\030\001 \001(\005"
+  "\022\021\n\ttimestamp\030\002 \001(\003\022\032\n\004type\030\003 \001(\0162\014.mode"
+  "ls.TYPE\022\014\n\004data\030\004 \001(\014\".\n\rPacketRequest\022\n"
+  "\n\002id\030\001 \001(\005\022\021\n\ttimestamp\030\002 \001(\003\"\007\n\005Empty*O"
+  "\n\006STATUS\022\r\n\tNOT_FOUND\020\000\022\007\n\003OFF\020\001\022\006\n\002ON\020\002"
+  "\022\016\n\nCONNECTING\020\003\022\010\n\004FAIL\020\004\022\013\n\007UNKNOWN\020\005*"
+  "6\n\004TYPE\022\r\n\tTIMESTAMP\020\000\022\010\n\004REAL\020\001\022\n\n\006STRI"
+  "NG\020\002\022\t\n\005ERROR\020\0032\267\001\n\016RemoteEndpoint\0224\n\rGe"
+  "tServerInfo\022\r.models.Empty\032\022.models.Serv"
+  "erInfo\"\000\0226\n\013ListDevices\022\r.models.Empty\032\026"
+  ".models.DeviceResponse\"\000\0227\n\nReadPacket\022\025"
+  ".models.PacketRequest\032\016.models.Packet\"\0000"
+  "\001B\021\252\002\016IOT.Monitoringb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_models_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_models_2eproto = {
-    false, false, 187, descriptor_table_protodef_models_2eproto,
+    false, false, 708, descriptor_table_protodef_models_2eproto,
     "models.proto",
-    &descriptor_table_models_2eproto_once, nullptr, 0, 2,
+    &descriptor_table_models_2eproto_once, nullptr, 0, 6,
     schemas, file_default_instances, TableStruct_models_2eproto::offsets,
     file_level_metadata_models_2eproto, file_level_enum_descriptors_models_2eproto,
     file_level_service_descriptors_models_2eproto,
@@ -102,6 +217,40 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_models_2
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_models_2eproto(&descriptor_table_models_2eproto);
 namespace models {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* STATUS_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_models_2eproto);
+  return file_level_enum_descriptors_models_2eproto[0];
+}
+bool STATUS_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* TYPE_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_models_2eproto);
+  return file_level_enum_descriptors_models_2eproto[1];
+}
+bool TYPE_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -340,6 +489,980 @@ void ServerInfo::InternalSwap(ServerInfo* other) {
 
 // ===================================================================
 
+class Device::_Internal {
+ public:
+};
+
+Device::Device(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:models.Device)
+}
+Device::Device(const Device& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Device* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.hardware_id_){}
+    , decltype(_impl_.id_){}
+    , decltype(_impl_.status_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.hardware_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.hardware_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_hardware_id().empty()) {
+    _this->_impl_.hardware_id_.Set(from._internal_hardware_id(), 
+      _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.id_, &from._impl_.id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.status_) -
+    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.status_));
+  // @@protoc_insertion_point(copy_constructor:models.Device)
+}
+
+inline void Device::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.hardware_id_){}
+    , decltype(_impl_.id_){0}
+    , decltype(_impl_.status_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.hardware_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.hardware_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+Device::~Device() {
+  // @@protoc_insertion_point(destructor:models.Device)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Device::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.hardware_id_.Destroy();
+}
+
+void Device::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Device::Clear() {
+// @@protoc_insertion_point(message_clear_start:models.Device)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.hardware_id_.ClearToEmpty();
+  ::memset(&_impl_.id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.status_) -
+      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.status_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Device::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string hardware_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_hardware_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "models.Device.hardware_id"));
+        } else
+          goto handle_unusual;
+        continue;
+      // .models.STATUS status = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_status(static_cast<::models::STATUS>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Device::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:models.Device)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_id(), target);
+  }
+
+  // string hardware_id = 2;
+  if (!this->_internal_hardware_id().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_hardware_id().data(), static_cast<int>(this->_internal_hardware_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "models.Device.hardware_id");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_hardware_id(), target);
+  }
+
+  // .models.STATUS status = 3;
+  if (this->_internal_status() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      3, this->_internal_status(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:models.Device)
+  return target;
+}
+
+size_t Device::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:models.Device)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string hardware_id = 2;
+  if (!this->_internal_hardware_id().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_hardware_id());
+  }
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_id());
+  }
+
+  // .models.STATUS status = 3;
+  if (this->_internal_status() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_status());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Device::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Device::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Device::GetClassData() const { return &_class_data_; }
+
+
+void Device::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Device*>(&to_msg);
+  auto& from = static_cast<const Device&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:models.Device)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_hardware_id().empty()) {
+    _this->_internal_set_hardware_id(from._internal_hardware_id());
+  }
+  if (from._internal_id() != 0) {
+    _this->_internal_set_id(from._internal_id());
+  }
+  if (from._internal_status() != 0) {
+    _this->_internal_set_status(from._internal_status());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Device::CopyFrom(const Device& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:models.Device)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Device::IsInitialized() const {
+  return true;
+}
+
+void Device::InternalSwap(Device* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.hardware_id_, lhs_arena,
+      &other->_impl_.hardware_id_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Device, _impl_.status_)
+      + sizeof(Device::_impl_.status_)
+      - PROTOBUF_FIELD_OFFSET(Device, _impl_.id_)>(
+          reinterpret_cast<char*>(&_impl_.id_),
+          reinterpret_cast<char*>(&other->_impl_.id_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Device::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_models_2eproto_getter, &descriptor_table_models_2eproto_once,
+      file_level_metadata_models_2eproto[1]);
+}
+
+// ===================================================================
+
+class DeviceResponse::_Internal {
+ public:
+};
+
+DeviceResponse::DeviceResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:models.DeviceResponse)
+}
+DeviceResponse::DeviceResponse(const DeviceResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  DeviceResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.device_){from._impl_.device_}
+    , decltype(_impl_.size_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.size_ = from._impl_.size_;
+  // @@protoc_insertion_point(copy_constructor:models.DeviceResponse)
+}
+
+inline void DeviceResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.device_){arena}
+    , decltype(_impl_.size_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+DeviceResponse::~DeviceResponse() {
+  // @@protoc_insertion_point(destructor:models.DeviceResponse)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void DeviceResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.device_.~RepeatedPtrField();
+}
+
+void DeviceResponse::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void DeviceResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:models.DeviceResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.device_.Clear();
+  _impl_.size_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* DeviceResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 size = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.size_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .models.Device device = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_device(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* DeviceResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:models.DeviceResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 size = 1;
+  if (this->_internal_size() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_size(), target);
+  }
+
+  // repeated .models.Device device = 2;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_device_size()); i < n; i++) {
+    const auto& repfield = this->_internal_device(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:models.DeviceResponse)
+  return target;
+}
+
+size_t DeviceResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:models.DeviceResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .models.Device device = 2;
+  total_size += 1UL * this->_internal_device_size();
+  for (const auto& msg : this->_impl_.device_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // int32 size = 1;
+  if (this->_internal_size() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_size());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DeviceResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    DeviceResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DeviceResponse::GetClassData() const { return &_class_data_; }
+
+
+void DeviceResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<DeviceResponse*>(&to_msg);
+  auto& from = static_cast<const DeviceResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:models.DeviceResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.device_.MergeFrom(from._impl_.device_);
+  if (from._internal_size() != 0) {
+    _this->_internal_set_size(from._internal_size());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void DeviceResponse::CopyFrom(const DeviceResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:models.DeviceResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool DeviceResponse::IsInitialized() const {
+  return true;
+}
+
+void DeviceResponse::InternalSwap(DeviceResponse* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.device_.InternalSwap(&other->_impl_.device_);
+  swap(_impl_.size_, other->_impl_.size_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata DeviceResponse::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_models_2eproto_getter, &descriptor_table_models_2eproto_once,
+      file_level_metadata_models_2eproto[2]);
+}
+
+// ===================================================================
+
+class Packet::_Internal {
+ public:
+};
+
+Packet::Packet(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:models.Packet)
+}
+Packet::Packet(const Packet& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Packet* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.data_){}
+    , decltype(_impl_.timestamp_){}
+    , decltype(_impl_.id_){}
+    , decltype(_impl_.type_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.data_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.data_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_data().empty()) {
+    _this->_impl_.data_.Set(from._internal_data(), 
+      _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.timestamp_, &from._impl_.timestamp_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.type_) -
+    reinterpret_cast<char*>(&_impl_.timestamp_)) + sizeof(_impl_.type_));
+  // @@protoc_insertion_point(copy_constructor:models.Packet)
+}
+
+inline void Packet::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.data_){}
+    , decltype(_impl_.timestamp_){int64_t{0}}
+    , decltype(_impl_.id_){0}
+    , decltype(_impl_.type_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.data_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.data_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+Packet::~Packet() {
+  // @@protoc_insertion_point(destructor:models.Packet)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Packet::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.data_.Destroy();
+}
+
+void Packet::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Packet::Clear() {
+// @@protoc_insertion_point(message_clear_start:models.Packet)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.data_.ClearToEmpty();
+  ::memset(&_impl_.timestamp_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.type_) -
+      reinterpret_cast<char*>(&_impl_.timestamp_)) + sizeof(_impl_.type_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Packet::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 timestamp = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.timestamp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .models.TYPE type = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_type(static_cast<::models::TYPE>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // bytes data = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          auto str = _internal_mutable_data();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Packet::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:models.Packet)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_id(), target);
+  }
+
+  // int64 timestamp = 2;
+  if (this->_internal_timestamp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(2, this->_internal_timestamp(), target);
+  }
+
+  // .models.TYPE type = 3;
+  if (this->_internal_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      3, this->_internal_type(), target);
+  }
+
+  // bytes data = 4;
+  if (!this->_internal_data().empty()) {
+    target = stream->WriteBytesMaybeAliased(
+        4, this->_internal_data(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:models.Packet)
+  return target;
+}
+
+size_t Packet::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:models.Packet)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes data = 4;
+  if (!this->_internal_data().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_data());
+  }
+
+  // int64 timestamp = 2;
+  if (this->_internal_timestamp() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_timestamp());
+  }
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_id());
+  }
+
+  // .models.TYPE type = 3;
+  if (this->_internal_type() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Packet::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Packet::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Packet::GetClassData() const { return &_class_data_; }
+
+
+void Packet::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Packet*>(&to_msg);
+  auto& from = static_cast<const Packet&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:models.Packet)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_data().empty()) {
+    _this->_internal_set_data(from._internal_data());
+  }
+  if (from._internal_timestamp() != 0) {
+    _this->_internal_set_timestamp(from._internal_timestamp());
+  }
+  if (from._internal_id() != 0) {
+    _this->_internal_set_id(from._internal_id());
+  }
+  if (from._internal_type() != 0) {
+    _this->_internal_set_type(from._internal_type());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Packet::CopyFrom(const Packet& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:models.Packet)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Packet::IsInitialized() const {
+  return true;
+}
+
+void Packet::InternalSwap(Packet* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.data_, lhs_arena,
+      &other->_impl_.data_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Packet, _impl_.type_)
+      + sizeof(Packet::_impl_.type_)
+      - PROTOBUF_FIELD_OFFSET(Packet, _impl_.timestamp_)>(
+          reinterpret_cast<char*>(&_impl_.timestamp_),
+          reinterpret_cast<char*>(&other->_impl_.timestamp_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Packet::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_models_2eproto_getter, &descriptor_table_models_2eproto_once,
+      file_level_metadata_models_2eproto[3]);
+}
+
+// ===================================================================
+
+class PacketRequest::_Internal {
+ public:
+};
+
+PacketRequest::PacketRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:models.PacketRequest)
+}
+PacketRequest::PacketRequest(const PacketRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  PacketRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.timestamp_){}
+    , decltype(_impl_.id_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.timestamp_, &from._impl_.timestamp_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.id_) -
+    reinterpret_cast<char*>(&_impl_.timestamp_)) + sizeof(_impl_.id_));
+  // @@protoc_insertion_point(copy_constructor:models.PacketRequest)
+}
+
+inline void PacketRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.timestamp_){int64_t{0}}
+    , decltype(_impl_.id_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+PacketRequest::~PacketRequest() {
+  // @@protoc_insertion_point(destructor:models.PacketRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void PacketRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void PacketRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void PacketRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:models.PacketRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.timestamp_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.id_) -
+      reinterpret_cast<char*>(&_impl_.timestamp_)) + sizeof(_impl_.id_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* PacketRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 timestamp = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.timestamp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* PacketRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:models.PacketRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_id(), target);
+  }
+
+  // int64 timestamp = 2;
+  if (this->_internal_timestamp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(2, this->_internal_timestamp(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:models.PacketRequest)
+  return target;
+}
+
+size_t PacketRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:models.PacketRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int64 timestamp = 2;
+  if (this->_internal_timestamp() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_timestamp());
+  }
+
+  // int32 id = 1;
+  if (this->_internal_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PacketRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    PacketRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PacketRequest::GetClassData() const { return &_class_data_; }
+
+
+void PacketRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<PacketRequest*>(&to_msg);
+  auto& from = static_cast<const PacketRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:models.PacketRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_timestamp() != 0) {
+    _this->_internal_set_timestamp(from._internal_timestamp());
+  }
+  if (from._internal_id() != 0) {
+    _this->_internal_set_id(from._internal_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void PacketRequest::CopyFrom(const PacketRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:models.PacketRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PacketRequest::IsInitialized() const {
+  return true;
+}
+
+void PacketRequest::InternalSwap(PacketRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PacketRequest, _impl_.id_)
+      + sizeof(PacketRequest::_impl_.id_)
+      - PROTOBUF_FIELD_OFFSET(PacketRequest, _impl_.timestamp_)>(
+          reinterpret_cast<char*>(&_impl_.timestamp_),
+          reinterpret_cast<char*>(&other->_impl_.timestamp_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata PacketRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_models_2eproto_getter, &descriptor_table_models_2eproto_once,
+      file_level_metadata_models_2eproto[4]);
+}
+
+// ===================================================================
+
 class Empty::_Internal {
  public:
 };
@@ -375,7 +1498,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Empty::GetClassData() const { 
 ::PROTOBUF_NAMESPACE_ID::Metadata Empty::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_models_2eproto_getter, &descriptor_table_models_2eproto_once,
-      file_level_metadata_models_2eproto[1]);
+      file_level_metadata_models_2eproto[5]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -384,6 +1507,22 @@ PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::models::ServerInfo*
 Arena::CreateMaybeMessage< ::models::ServerInfo >(Arena* arena) {
   return Arena::CreateMessageInternal< ::models::ServerInfo >(arena);
+}
+template<> PROTOBUF_NOINLINE ::models::Device*
+Arena::CreateMaybeMessage< ::models::Device >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::models::Device >(arena);
+}
+template<> PROTOBUF_NOINLINE ::models::DeviceResponse*
+Arena::CreateMaybeMessage< ::models::DeviceResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::models::DeviceResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::models::Packet*
+Arena::CreateMaybeMessage< ::models::Packet >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::models::Packet >(arena);
+}
+template<> PROTOBUF_NOINLINE ::models::PacketRequest*
+Arena::CreateMaybeMessage< ::models::PacketRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::models::PacketRequest >(arena);
 }
 template<> PROTOBUF_NOINLINE ::models::Empty*
 Arena::CreateMaybeMessage< ::models::Empty >(Arena* arena) {

@@ -14,12 +14,8 @@ HANDLE event = ::CreateEvent(
 	nullptr
 );
 
-void reader(DWORD error, DWORD num) {
 
-	
-}
-
-void producer(std::shared_ptr<iot_monitoring::device> dev, PacketStream* queue) {
+void producer(std::shared_ptr<iot_monitoring::device> dev, std::map<std::string, iot_monitoring::data::PacketStream>* queue) {
 	std::cout << "Starting serial reader" << std::endl;
 	istream.set_rdbuf(&bb);
 
@@ -32,7 +28,8 @@ void producer(std::shared_ptr<iot_monitoring::device> dev, PacketStream* queue) 
 		std::cout << "Completed with total bytes: " << num << std::endl;
 		std::cout << "Errors: " << error << std::endl;
 		std::cout << std::endl;
-		queue->push(istream);
+		
+		(*queue)["test"].push(istream);
 		std::cout << "Total queue size: " << queue->size() << std::endl;
 
 	});

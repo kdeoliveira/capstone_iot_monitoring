@@ -3,13 +3,12 @@ cmake_minimum_required(VERSION 3.15)
 project("server")
 
 
-add_library(${PROJECT_NAME} STATIC "src/server.cxx" "./include/server.hpp")
+add_library(${PROJECT_NAME} STATIC "src/server.cxx")
 
 target_include_directories(${PROJECT_NAME} PRIVATE "./src")
 target_include_directories(${PROJECT_NAME} PRIVATE "./def")
-target_include_directories(${PROJECT_NAME} PRIVATE "./include")
+target_include_directories(${PROJECT_NAME} PUBLIC "./include")
 
-target_include_directories(${PROJECT_NAME} INTERFACE "./include")
 
 
 option(GRPC_REMOTE "Build grpc via fetchContent" OFF)
@@ -78,7 +77,7 @@ target_link_libraries(model_proto ${_REFLECTION}
     ${_PROTOBUF_LIBPROTOBUF})
 
 # Protobuf generate
-# protoc -I. --grpc_out=..\include --cpp_out=..\include --plugin=protoc-gen-grpc=C:\Users\deolivek\source\repos\iot_monitoring_endpoint\out\build\x64-Debug\_deps\grpc-build\grpc_cpp_plugin.exe models.proto
+# protoc -I. --grpc_out=..\def --cpp_out=..\def --plugin=protoc-gen-grpc=C:\Users\deolivek\source\vcpkg\packages\grpc_x64-windows\tools\grpc\grpc_cpp_plugin.exe models.proto
 
 
 
@@ -86,6 +85,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE model_proto ${_REFLECTION}
     ${_GRPC_GRPCPP}
     ${_PROTOBUF_LIBPROTOBUF})
 
+target_link_libraries(${PROJECT_NAME} PUBLIC data)
 
 # GRPC:
 # https://chromium.googlesource.com/external/github.com/grpc/grpc/+/HEAD/src/cpp/README.md
