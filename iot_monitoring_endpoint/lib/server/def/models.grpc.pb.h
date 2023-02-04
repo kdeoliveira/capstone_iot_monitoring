@@ -58,6 +58,15 @@ class RemoteEndpoint final {
     std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::models::Packet>> PrepareAsyncReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::models::Packet>>(PrepareAsyncReadPacketRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>> ReadAll(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>>(ReadAllRaw(context));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>> AsyncReadAll(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>>(AsyncReadAllRaw(context, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>> PrepareAsyncReadAll(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>>(PrepareAsyncReadAllRaw(context, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -66,6 +75,7 @@ class RemoteEndpoint final {
       virtual void ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void ReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest* request, ::grpc::ClientReadReactor< ::models::Packet>* reactor) = 0;
+      virtual void ReadAll(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::models::ReadAllOn,::models::Packet>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -78,6 +88,9 @@ class RemoteEndpoint final {
     virtual ::grpc::ClientReaderInterface< ::models::Packet>* ReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::models::Packet>* AsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::models::Packet>* PrepareAsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>* ReadAllRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>* AsyncReadAllRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::models::ReadAllOn, ::models::Packet>* PrepareAsyncReadAllRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -105,6 +118,15 @@ class RemoteEndpoint final {
     std::unique_ptr< ::grpc::ClientAsyncReader< ::models::Packet>> PrepareAsyncReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReader< ::models::Packet>>(PrepareAsyncReadPacketRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::models::ReadAllOn, ::models::Packet>> ReadAll(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::models::ReadAllOn, ::models::Packet>>(ReadAllRaw(context));
+    }
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::models::ReadAllOn, ::models::Packet>> AsyncReadAll(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::models::ReadAllOn, ::models::Packet>>(AsyncReadAllRaw(context, cq, tag));
+    }
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::models::ReadAllOn, ::models::Packet>> PrepareAsyncReadAll(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::models::ReadAllOn, ::models::Packet>>(PrepareAsyncReadAllRaw(context, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -113,6 +135,7 @@ class RemoteEndpoint final {
       void ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, std::function<void(::grpc::Status)>) override;
       void ListDevices(::grpc::ClientContext* context, const ::models::Empty* request, ::models::DeviceResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void ReadPacket(::grpc::ClientContext* context, const ::models::PacketRequest* request, ::grpc::ClientReadReactor< ::models::Packet>* reactor) override;
+      void ReadAll(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::models::ReadAllOn,::models::Packet>* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -131,9 +154,13 @@ class RemoteEndpoint final {
     ::grpc::ClientReader< ::models::Packet>* ReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request) override;
     ::grpc::ClientAsyncReader< ::models::Packet>* AsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::models::Packet>* PrepareAsyncReadPacketRaw(::grpc::ClientContext* context, const ::models::PacketRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::models::ReadAllOn, ::models::Packet>* ReadAllRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::models::ReadAllOn, ::models::Packet>* AsyncReadAllRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::models::ReadAllOn, ::models::Packet>* PrepareAsyncReadAllRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_GetServerInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_ListDevices_;
     const ::grpc::internal::RpcMethod rpcmethod_ReadPacket_;
+    const ::grpc::internal::RpcMethod rpcmethod_ReadAll_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -144,6 +171,7 @@ class RemoteEndpoint final {
     virtual ::grpc::Status GetServerInfo(::grpc::ServerContext* context, const ::models::Empty* request, ::models::ServerInfo* response);
     virtual ::grpc::Status ListDevices(::grpc::ServerContext* context, const ::models::Empty* request, ::models::DeviceResponse* response);
     virtual ::grpc::Status ReadPacket(::grpc::ServerContext* context, const ::models::PacketRequest* request, ::grpc::ServerWriter< ::models::Packet>* writer);
+    virtual ::grpc::Status ReadAll(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>* stream);
   };
   template <class BaseClass>
   class WithAsyncMethod_GetServerInfo : public BaseClass {
@@ -205,7 +233,27 @@ class RemoteEndpoint final {
       ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_GetServerInfo<WithAsyncMethod_ListDevices<WithAsyncMethod_ReadPacket<Service > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_ReadAll : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ReadAll() {
+      ::grpc::Service::MarkMethodAsync(3);
+    }
+    ~WithAsyncMethod_ReadAll() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadAll(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestReadAll(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::models::Packet, ::models::ReadAllOn>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncBidiStreaming(3, context, stream, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_GetServerInfo<WithAsyncMethod_ListDevices<WithAsyncMethod_ReadPacket<WithAsyncMethod_ReadAll<Service > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_GetServerInfo : public BaseClass {
    private:
@@ -282,7 +330,30 @@ class RemoteEndpoint final {
     virtual ::grpc::ServerWriteReactor< ::models::Packet>* ReadPacket(
       ::grpc::CallbackServerContext* /*context*/, const ::models::PacketRequest* /*request*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_GetServerInfo<WithCallbackMethod_ListDevices<WithCallbackMethod_ReadPacket<Service > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_ReadAll : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_ReadAll() {
+      ::grpc::Service::MarkMethodCallback(3,
+          new ::grpc::internal::CallbackBidiHandler< ::models::ReadAllOn, ::models::Packet>(
+            [this](
+                   ::grpc::CallbackServerContext* context) { return this->ReadAll(context); }));
+    }
+    ~WithCallbackMethod_ReadAll() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadAll(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerBidiReactor< ::models::ReadAllOn, ::models::Packet>* ReadAll(
+      ::grpc::CallbackServerContext* /*context*/)
+      { return nullptr; }
+  };
+  typedef WithCallbackMethod_GetServerInfo<WithCallbackMethod_ListDevices<WithCallbackMethod_ReadPacket<WithCallbackMethod_ReadAll<Service > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_GetServerInfo : public BaseClass {
@@ -331,6 +402,23 @@ class RemoteEndpoint final {
     }
     // disable synchronous version of this method
     ::grpc::Status ReadPacket(::grpc::ServerContext* /*context*/, const ::models::PacketRequest* /*request*/, ::grpc::ServerWriter< ::models::Packet>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_ReadAll : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ReadAll() {
+      ::grpc::Service::MarkMethodGeneric(3);
+    }
+    ~WithGenericMethod_ReadAll() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadAll(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -393,6 +481,26 @@ class RemoteEndpoint final {
     }
     void RequestReadPacket(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_ReadAll : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ReadAll() {
+      ::grpc::Service::MarkMethodRaw(3);
+    }
+    ~WithRawMethod_ReadAll() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadAll(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestReadAll(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncBidiStreaming(3, context, stream, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -460,6 +568,29 @@ class RemoteEndpoint final {
     }
     virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* ReadPacket(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_ReadAll : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_ReadAll() {
+      ::grpc::Service::MarkMethodRawCallback(3,
+          new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context) { return this->ReadAll(context); }));
+    }
+    ~WithRawCallbackMethod_ReadAll() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ReadAll(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>* /*stream*/)  override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerBidiReactor< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* ReadAll(
+      ::grpc::CallbackServerContext* /*context*/)
+      { return nullptr; }
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetServerInfo : public BaseClass {

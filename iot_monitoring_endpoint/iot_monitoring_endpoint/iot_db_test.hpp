@@ -59,7 +59,7 @@ void db_runner(iot_monitoring::database::store* db, std::map<std::string, iot_mo
 	auto iter = _ps->find("test");
 	if (iter == _ps->end() || iter->second.empty())
 		return;
-	auto p = iter->second.pop();
+	auto p = iter->second.peek();
 
 	auto time_now = std::chrono::system_clock::now().time_since_epoch();
 
@@ -70,7 +70,7 @@ void db_runner(iot_monitoring::database::store* db, std::map<std::string, iot_mo
 
 	db->insert_value("extra", doc);
 
-	std::cout << "Value inserted in database\n" << "Queue qty: " << _ps->size() << std::endl;
+	//std::cout << "Value inserted in database\n" << "Queue qty: " << _ps->size() << std::endl;
 
 	//bsoncxx::stdx::optional<mongocxx::result::insert_one> res = db->insert_value("sensors",doc);
 

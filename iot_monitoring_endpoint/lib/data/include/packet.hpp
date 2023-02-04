@@ -5,6 +5,7 @@
 #include <istream>
 #include <sstream>
 #include <vector>
+#include <iostream>
 
 namespace iot_monitoring {
 	namespace data {
@@ -13,6 +14,14 @@ namespace iot_monitoring {
 			OFF,
 			NOT_FOUND,
 			FAIL,
+		};
+
+		enum header_id : uint16_t {
+			TEMP,
+			CO,
+			HEART,
+			OXYGEN,
+			UNKNOWN
 		};
 
 		struct device_info {
@@ -36,7 +45,19 @@ namespace iot_monitoring {
 			packet() = default;
 			packet(std::vector<char>::iterator& beg) {
 				
-				std::memcpy((void*)&header.id,beg._Ptr, sizeof(S));
+				S temp_id;
+				std::memcpy((void*)&temp_id,beg._Ptr, sizeof(S));
+				switch (temp_id) {
+				case header_id::TEMP:
+				case header_id::CO:
+				case header_id::HEART:
+				case header_id::OXYGEN:
+					header.id = temp_id;
+					break;
+				default:
+					header.id = header_id::UNKNOWN;
+					break;
+				}
 
 				beg += sizeof(S);
 

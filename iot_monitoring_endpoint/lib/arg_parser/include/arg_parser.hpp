@@ -8,6 +8,9 @@
 
 #define stringify(n) (#n)
 
+#define GEN_CASE(n) case n:\
+					return stringify(n);
+
 namespace iot_monitoring {
 	class ARGUMENTS {
 	public:
@@ -16,6 +19,7 @@ namespace iot_monitoring {
 			UNINSTALL,
 			HELP,
 			PORT,
+			INTERACTIVE
 		};
 
 		ARGUMENTS() = default;
@@ -24,12 +28,10 @@ namespace iot_monitoring {
 
 		std::string toString() {
 			switch (this->_value) {
-			case INSTALL:
-				return stringify(INSTALL);
-			case UNINSTALL:
-				return stringify(UNINSTALL);
-			case PORT:
-				return stringify(PORT);
+			GEN_CASE(INSTALL)
+			GEN_CASE(UNINSTALL)
+			GEN_CASE(PORT)
+			GEN_CASE(INTERACTIVE)
 			default:
 				return stringify(HELP);
 			}

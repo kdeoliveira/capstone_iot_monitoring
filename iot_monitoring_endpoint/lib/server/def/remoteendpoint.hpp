@@ -24,5 +24,7 @@ namespace iot_monitoring {
 		grpc::Status GetServerInfo(::grpc::ServerContext*, const ::models::Empty*, ::models::ServerInfo*);
 		grpc::Status ListDevices(::grpc::ServerContext*, const ::models::Empty*, ::models::DeviceResponse*);
 		grpc::Status ReadPacket(::grpc::ServerContext*, const ::models::PacketRequest*, ::grpc::ServerWriter<::models::Packet>*);
+		grpc::Status ReadAll(::grpc::ServerContext*, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>*);
+
 	};
 }

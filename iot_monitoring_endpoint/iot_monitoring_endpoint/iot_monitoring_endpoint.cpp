@@ -7,15 +7,26 @@
 int main(int argc, char** argv)
 {
 
-	std::cout << "IOT MONITORING ENDPOINT" << std::endl;
-	std::cout << "\n\n";
-	std::cout << "Service starting" << std::endl;
+	
 	iot_monitoring::arg_handler h(argc, argv);
 
-	iot_monitoring::main(h);
+	if (h.handle(iot_monitoring::ARGUMENTS::INTERACTIVE)) {
+		std::cout << "IOT MONITORING ENDPOINT" << std::endl;
+		std::cout << "\n\n";
+		std::cout << "Service starting" << std::endl;
+		
+		iot_monitoring::main(h);
 
-	std::cout << "\n\n";
-	std::cout << "Service finishing" << std::endl;
+		std::cout << "\n\n";
+		std::cout << "Service finishing" << std::endl;
+	}
+	else if (h.handle(iot_monitoring::ARGUMENTS::INSTALL)) {
+		std::cout << "Service handler has not been implemented.\nUse interactive mode instead" << std::endl;
+	}
+	else {
+		std::cout << "usage: .\iot_monitoring_endpoint.exe -port [hardware id] -install -interactive -help" << std::endl;
+	}
+	
 
 	delete poll_uart;
 	delete poll_db;

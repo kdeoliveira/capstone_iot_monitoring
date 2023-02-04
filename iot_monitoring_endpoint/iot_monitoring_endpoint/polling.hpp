@@ -84,18 +84,17 @@ private:
 		std::cout << "Starting serial reader" << std::endl;
 		istream.set_rdbuf(&bb);
 
-
 		//Async opeartion
 		iot_monitoring::async_serial async_ser(_dev);
 
 		DWORD waiter;
 		async_ser.set_routine([&](DWORD error, DWORD num) {
-			std::cout << "Completed with total bytes: " << num << std::endl;
+			/*std::cout << "Completed with total bytes: " << num << std::endl;
 			std::cout << "Errors: " << error << std::endl;
-			std::cout << std::endl;
+			std::cout << std::endl;*/
 			(*_queue)["test"].push(istream);
-			std::cout << "Total queue size: " << _queue->size() << std::endl;
-
+			
+			//std::cout << "Total queue size: " << _queue->size() << std::endl;
 			});
 
 		signal.wait();
@@ -117,8 +116,8 @@ private:
 				break;
 
 			case WAIT_IO_COMPLETION: //completed
-				std::cout << "Read completed" << std::endl;
-				Sleep(10000);
+				//std::cout << "Read completed" << std::endl;
+				Sleep(5000);
 				SetEvent(event);
 				break;
 			default:

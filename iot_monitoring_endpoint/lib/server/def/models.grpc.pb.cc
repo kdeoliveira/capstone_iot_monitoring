@@ -25,6 +25,7 @@ static const char* RemoteEndpoint_method_names[] = {
   "/models.RemoteEndpoint/GetServerInfo",
   "/models.RemoteEndpoint/ListDevices",
   "/models.RemoteEndpoint/ReadPacket",
+  "/models.RemoteEndpoint/ReadAll",
 };
 
 std::unique_ptr< RemoteEndpoint::Stub> RemoteEndpoint::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -37,6 +38,7 @@ RemoteEndpoint::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& cha
   : channel_(channel), rpcmethod_GetServerInfo_(RemoteEndpoint_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ListDevices_(RemoteEndpoint_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ReadPacket_(RemoteEndpoint_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_ReadAll_(RemoteEndpoint_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
   {}
 
 ::grpc::Status RemoteEndpoint::Stub::GetServerInfo(::grpc::ClientContext* context, const ::models::Empty& request, ::models::ServerInfo* response) {
@@ -101,6 +103,22 @@ void RemoteEndpoint::Stub::async::ReadPacket(::grpc::ClientContext* context, con
   return ::grpc::internal::ClientAsyncReaderFactory< ::models::Packet>::Create(channel_.get(), cq, rpcmethod_ReadPacket_, context, request, false, nullptr);
 }
 
+::grpc::ClientReaderWriter< ::models::ReadAllOn, ::models::Packet>* RemoteEndpoint::Stub::ReadAllRaw(::grpc::ClientContext* context) {
+  return ::grpc::internal::ClientReaderWriterFactory< ::models::ReadAllOn, ::models::Packet>::Create(channel_.get(), rpcmethod_ReadAll_, context);
+}
+
+void RemoteEndpoint::Stub::async::ReadAll(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::models::ReadAllOn,::models::Packet>* reactor) {
+  ::grpc::internal::ClientCallbackReaderWriterFactory< ::models::ReadAllOn,::models::Packet>::Create(stub_->channel_.get(), stub_->rpcmethod_ReadAll_, context, reactor);
+}
+
+::grpc::ClientAsyncReaderWriter< ::models::ReadAllOn, ::models::Packet>* RemoteEndpoint::Stub::AsyncReadAllRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::models::ReadAllOn, ::models::Packet>::Create(channel_.get(), cq, rpcmethod_ReadAll_, context, true, tag);
+}
+
+::grpc::ClientAsyncReaderWriter< ::models::ReadAllOn, ::models::Packet>* RemoteEndpoint::Stub::PrepareAsyncReadAllRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderWriterFactory< ::models::ReadAllOn, ::models::Packet>::Create(channel_.get(), cq, rpcmethod_ReadAll_, context, false, nullptr);
+}
+
 RemoteEndpoint::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RemoteEndpoint_method_names[0],
@@ -132,6 +150,16 @@ RemoteEndpoint::Service::Service() {
              ::grpc::ServerWriter<::models::Packet>* writer) {
                return service->ReadPacket(ctx, req, writer);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      RemoteEndpoint_method_names[3],
+      ::grpc::internal::RpcMethod::BIDI_STREAMING,
+      new ::grpc::internal::BidiStreamingHandler< RemoteEndpoint::Service, ::models::ReadAllOn, ::models::Packet>(
+          [](RemoteEndpoint::Service* service,
+             ::grpc::ServerContext* ctx,
+             ::grpc::ServerReaderWriter<::models::Packet,
+             ::models::ReadAllOn>* stream) {
+               return service->ReadAll(ctx, stream);
+             }, this)));
 }
 
 RemoteEndpoint::Service::~Service() {
@@ -155,6 +183,12 @@ RemoteEndpoint::Service::~Service() {
   (void) context;
   (void) request;
   (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status RemoteEndpoint::Service::ReadAll(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>* stream) {
+  (void) context;
+  (void) stream;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

@@ -86,9 +86,9 @@ namespace iot_monitoring {
 			});
 
 		auto server_task = std::async(std::launch::async, [&]() {
-			std::cout << "Server listening on address: " << "0.0.0.0:50051" << std::endl;
+			std::cout << "Server listening on address: " << "0.0.0.0:6501" << std::endl;
 
-			iot_monitoring::start_server(_ds, _ps, std::launch::async, "0.0.0.0:50051");
+			iot_monitoring::start_server(_ds, _ps, std::launch::async, "0.0.0.0:6501");
 			});
 
 

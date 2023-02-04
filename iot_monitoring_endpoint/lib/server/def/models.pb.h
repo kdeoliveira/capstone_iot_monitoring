@@ -62,6 +62,9 @@ extern PacketDefaultTypeInternal _Packet_default_instance_;
 class PacketRequest;
 struct PacketRequestDefaultTypeInternal;
 extern PacketRequestDefaultTypeInternal _PacketRequest_default_instance_;
+class ReadAllOn;
+struct ReadAllOnDefaultTypeInternal;
+extern ReadAllOnDefaultTypeInternal _ReadAllOn_default_instance_;
 class ServerInfo;
 struct ServerInfoDefaultTypeInternal;
 extern ServerInfoDefaultTypeInternal _ServerInfo_default_instance_;
@@ -72,6 +75,7 @@ template<> ::models::DeviceResponse* Arena::CreateMaybeMessage<::models::DeviceR
 template<> ::models::Empty* Arena::CreateMaybeMessage<::models::Empty>(Arena*);
 template<> ::models::Packet* Arena::CreateMaybeMessage<::models::Packet>(Arena*);
 template<> ::models::PacketRequest* Arena::CreateMaybeMessage<::models::PacketRequest>(Arena*);
+template<> ::models::ReadAllOn* Arena::CreateMaybeMessage<::models::ReadAllOn>(Arena*);
 template<> ::models::ServerInfo* Arena::CreateMaybeMessage<::models::ServerInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace models {
@@ -992,6 +996,154 @@ class PacketRequest final :
 };
 // -------------------------------------------------------------------
 
+class ReadAllOn final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:models.ReadAllOn) */ {
+ public:
+  inline ReadAllOn() : ReadAllOn(nullptr) {}
+  ~ReadAllOn() override;
+  explicit PROTOBUF_CONSTEXPR ReadAllOn(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ReadAllOn(const ReadAllOn& from);
+  ReadAllOn(ReadAllOn&& from) noexcept
+    : ReadAllOn() {
+    *this = ::std::move(from);
+  }
+
+  inline ReadAllOn& operator=(const ReadAllOn& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ReadAllOn& operator=(ReadAllOn&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ReadAllOn& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ReadAllOn* internal_default_instance() {
+    return reinterpret_cast<const ReadAllOn*>(
+               &_ReadAllOn_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(ReadAllOn& a, ReadAllOn& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ReadAllOn* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ReadAllOn* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ReadAllOn* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ReadAllOn>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ReadAllOn& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ReadAllOn& from) {
+    ReadAllOn::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ReadAllOn* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "models.ReadAllOn";
+  }
+  protected:
+  explicit ReadAllOn(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kActiveFieldNumber = 1,
+  };
+  // bool active = 1;
+  void clear_active();
+  bool active() const;
+  void set_active(bool value);
+  private:
+  bool _internal_active() const;
+  void _internal_set_active(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:models.ReadAllOn)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    bool active_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_models_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Empty final :
     public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:models.Empty) */ {
  public:
@@ -1039,7 +1191,7 @@ class Empty final :
                &_Empty_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(Empty& a, Empty& b) {
     a.Swap(&b);
@@ -1497,11 +1649,37 @@ inline void PacketRequest::set_timestamp(int64_t value) {
 
 // -------------------------------------------------------------------
 
+// ReadAllOn
+
+// bool active = 1;
+inline void ReadAllOn::clear_active() {
+  _impl_.active_ = false;
+}
+inline bool ReadAllOn::_internal_active() const {
+  return _impl_.active_;
+}
+inline bool ReadAllOn::active() const {
+  // @@protoc_insertion_point(field_get:models.ReadAllOn.active)
+  return _internal_active();
+}
+inline void ReadAllOn::_internal_set_active(bool value) {
+  
+  _impl_.active_ = value;
+}
+inline void ReadAllOn::set_active(bool value) {
+  _internal_set_active(value);
+  // @@protoc_insertion_point(field_set:models.ReadAllOn.active)
+}
+
+// -------------------------------------------------------------------
+
 // Empty
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -1,7 +1,6 @@
 #include "server.hpp"
 #include "remoteendpoint.hpp"
 
-
 namespace iot_monitoring {
 
 
@@ -43,27 +42,89 @@ namespace iot_monitoring {
 
 	grpc::Status RemoteEndopintServer::ListDevices(::grpc::ServerContext*, const::models::Empty*, ::models::DeviceResponse* response)
 	{
-		auto devices = response->mutable_device();
-		response->set_size(this->_device_queue->size());
-		if (response->size() == 0)
-			return grpc::Status::Status(grpc::StatusCode::NOT_FOUND, "No device found");
+		//auto devices = response->mutable_device();
+		//response->set_size(this->_device_queue->size());
+		//if (response->size() == 0)
+		//	return grpc::Status::Status(grpc::StatusCode::NOT_FOUND, "No device found");
 
-		std::unique_lock<std::mutex> l{ this->_m };
+		//std::unique_lock<std::mutex> l{ this->_m };
 
-		std::transform(this->_device_queue->cbegin(), this->_device_queue->cend(), devices->begin(), [&](const iot_monitoring::data::device_info& info) {
-			auto d = ::models::Device();
-			d.set_id(info.id);
-			d.set_hardware_id(info.hardware_id);
-			d.set_status(static_cast<::models::STATUS>(info.hardware_status));
-			return d;
-			});
-
+		//std::transform(this->_device_queue->cbegin(), this->_device_queue->cend(), devices->begin(), [&](const iot_monitoring::data::device_info& info) {
+		//	auto d = ::models::Device();
+		//	d.set_id(info.id);
+		//	d.set_hardware_id(info.hardware_id);
+		//	d.set_status(static_cast<::models::STATUS>(info.hardware_status));
+		//	return d;
+		//	});
+		
+		response->set_size(10);
+		for (int i = 0; i < 10; i++) {
+			auto dev = response->add_device();
+			dev->set_id(i + 10);
+			dev->set_hardware_id("Hardware id");
+			dev->set_status(models::STATUS::ON);
+		}
 
 		return grpc::Status();
 	}
 
-	grpc::Status RemoteEndopintServer::ReadPacket(::grpc::ServerContext*, const::models::PacketRequest*, ::grpc::ServerWriter<::models::Packet>*)
+	grpc::Status RemoteEndopintServer::ReadPacket(::grpc::ServerContext* context, const::models::PacketRequest* request, ::grpc::ServerWriter<::models::Packet>* response)
 	{
+		
+		auto header_id = request->id();
+		std::unique_lock<std::mutex>l{ this->_m };
+
+		auto packets = this->_data_queue->find("test");
+		if (packets == this->_data_queue->end()) {
+			return grpc::Status::Status(grpc::StatusCode::NOT_FOUND, "No packets found");
+		}
+
+		::models::Packet out = ::models::Packet::Packet();
+
+		while (!context->IsCancelled() && !packets->second.empty()) {
+			
+			auto pck = packets->second.pop();
+			out.set_id((int32_t)pck.header.id);
+			out.set_data(std::to_string(pck.payload));
+			auto time_now = std::chrono::system_clock::now().time_since_epoch();
+			out.set_timestamp((int64_t)time_now.count());
+
+			response->Write(out);
+		}
+		
+
+		return grpc::Status();
+	}
+
+	grpc::Status RemoteEndopintServer::ReadAll(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::models::Packet, ::models::ReadAllOn>* stream)
+	{
+		std::unique_lock<std::mutex>l{ this->_m };
+
+		auto packets = this->_data_queue->find("test");
+		if (packets == this->_data_queue->end()) {
+			return grpc::Status::Status(grpc::StatusCode::NOT_FOUND, "No packets found");
+		}
+
+
+		::models::ReadAllOn cancellation;
+
+		while (!context->IsCancelled() && stream->Read(&cancellation)) {
+
+			if (!cancellation.active())
+				break;
+
+			packets->second.wait();
+			::models::Packet out = ::models::Packet::Packet();
+
+			auto pck = packets->second.pop();
+			out.set_id((int32_t)pck.header.id);
+			out.set_data(std::to_string(pck.payload));
+			auto time_now = std::chrono::system_clock::now().time_since_epoch();
+			out.set_timestamp((int64_t)time_now.count());
+			stream->Write(std::move(out));
+			//Sleep(10);
+		}
+		
 		return grpc::Status();
 	}
 

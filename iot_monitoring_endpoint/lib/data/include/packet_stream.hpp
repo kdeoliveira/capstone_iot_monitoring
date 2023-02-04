@@ -1,7 +1,7 @@
 #pragma once
 #include <mutex>
 #include <packet.hpp>
-#include <queue>
+#include <deque>
 #include <sstream>
 #include <istream>
 #include <vector>
@@ -25,7 +25,7 @@ namespace iot_monitoring {
 		template<typename T>
 		class Stream {
 		protected:
-			std::queue<iot_monitoring::data::packet<uint16_t, T>> _queue;
+			std::deque<iot_monitoring::data::packet<uint16_t, T>> _queue;
 		public:
 			virtual void push(std::istream&) = 0;
 			virtual iot_monitoring::data::packet<uint16_t, T>& pop() = 0;
@@ -61,22 +61,28 @@ namespace iot_monitoring {
 
 				std::unique_lock<std::mutex> lock{ this->_mutex };
 
-				while (iterator != _buffer.end() && iterator + 2 != _buffer.end()) {
+				while (iterator != _buffer.end() && std::next(iterator, 4) != _buffer.end()) {
 					iterator += 2;
-					this->_queue.push(iot_monitoring::data::packet<uint16_t, float>(iterator));
-					iterator = std::search(iterator, _buffer.end(), RN, RN + 2);
+					try {
+						this->_queue.push_back(iot_monitoring::data::packet<uint16_t, float>(iterator));
+						iterator = std::search(iterator, _buffer.end(), RN, RN + 2);
+					}
+					catch (std::exception&) {
+						return;
+					}
 				}
+				_cv.notify_one();
 			}
 
 			iot_monitoring::data::packet<uint16_t, float>& pop() {
 				std::unique_lock<std::mutex> lock{ this->_mutex };
-				auto x = std::move(this->_queue.back());
-				this->_queue.pop();
+				auto x = this->_queue.front();
+				this->_queue.pop_front();
 				return x;
 			}
 
 			iot_monitoring::data::packet<uint16_t, float>& peek() {
-				return this->_queue.back();
+				return this->_queue.front();
 			}
 
 			bool empty() const {

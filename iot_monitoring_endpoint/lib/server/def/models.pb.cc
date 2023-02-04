@@ -95,6 +95,19 @@ struct PacketRequestDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PacketRequestDefaultTypeInternal _PacketRequest_default_instance_;
+PROTOBUF_CONSTEXPR ReadAllOn::ReadAllOn(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.active_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct ReadAllOnDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ReadAllOnDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ReadAllOnDefaultTypeInternal() {}
+  union {
+    ReadAllOn _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReadAllOnDefaultTypeInternal _ReadAllOn_default_instance_;
 PROTOBUF_CONSTEXPR Empty::Empty(
     ::_pbi::ConstantInitialized) {}
 struct EmptyDefaultTypeInternal {
@@ -107,7 +120,7 @@ struct EmptyDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyDefaultTypeInternal _Empty_default_instance_;
 }  // namespace models
-static ::_pb::Metadata file_level_metadata_models_2eproto[6];
+static ::_pb::Metadata file_level_metadata_models_2eproto[7];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_models_2eproto[2];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_models_2eproto = nullptr;
 
@@ -157,6 +170,13 @@ const uint32_t TableStruct_models_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::models::PacketRequest, _impl_.id_),
   PROTOBUF_FIELD_OFFSET(::models::PacketRequest, _impl_.timestamp_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::models::ReadAllOn, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::models::ReadAllOn, _impl_.active_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::models::Empty, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -169,7 +189,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 18, -1, -1, sizeof(::models::DeviceResponse)},
   { 26, -1, -1, sizeof(::models::Packet)},
   { 36, -1, -1, sizeof(::models::PacketRequest)},
-  { 44, -1, -1, sizeof(::models::Empty)},
+  { 44, -1, -1, sizeof(::models::ReadAllOn)},
+  { 51, -1, -1, sizeof(::models::Empty)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -178,6 +199,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::models::_DeviceResponse_default_instance_._instance,
   &::models::_Packet_default_instance_._instance,
   &::models::_PacketRequest_default_instance_._instance,
+  &::models::_ReadAllOn_default_instance_._instance,
   &::models::_Empty_default_instance_._instance,
 };
 
@@ -190,22 +212,24 @@ const char descriptor_table_protodef_models_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "(\0132\016.models.Device\"Q\n\006Packet\022\n\n\002id\030\001 \001(\005"
   "\022\021\n\ttimestamp\030\002 \001(\003\022\032\n\004type\030\003 \001(\0162\014.mode"
   "ls.TYPE\022\014\n\004data\030\004 \001(\014\".\n\rPacketRequest\022\n"
-  "\n\002id\030\001 \001(\005\022\021\n\ttimestamp\030\002 \001(\003\"\007\n\005Empty*O"
-  "\n\006STATUS\022\r\n\tNOT_FOUND\020\000\022\007\n\003OFF\020\001\022\006\n\002ON\020\002"
-  "\022\016\n\nCONNECTING\020\003\022\010\n\004FAIL\020\004\022\013\n\007UNKNOWN\020\005*"
-  "6\n\004TYPE\022\r\n\tTIMESTAMP\020\000\022\010\n\004REAL\020\001\022\n\n\006STRI"
-  "NG\020\002\022\t\n\005ERROR\020\0032\267\001\n\016RemoteEndpoint\0224\n\rGe"
-  "tServerInfo\022\r.models.Empty\032\022.models.Serv"
-  "erInfo\"\000\0226\n\013ListDevices\022\r.models.Empty\032\026"
-  ".models.DeviceResponse\"\000\0227\n\nReadPacket\022\025"
-  ".models.PacketRequest\032\016.models.Packet\"\0000"
-  "\001B\021\252\002\016IOT.Monitoringb\006proto3"
+  "\n\002id\030\001 \001(\005\022\021\n\ttimestamp\030\002 \001(\003\"\033\n\tReadAll"
+  "On\022\016\n\006active\030\001 \001(\010\"\007\n\005Empty*O\n\006STATUS\022\r\n"
+  "\tNOT_FOUND\020\000\022\007\n\003OFF\020\001\022\006\n\002ON\020\002\022\016\n\nCONNECT"
+  "ING\020\003\022\010\n\004FAIL\020\004\022\013\n\007UNKNOWN\020\005*6\n\004TYPE\022\r\n\t"
+  "TIMESTAMP\020\000\022\010\n\004REAL\020\001\022\n\n\006STRING\020\002\022\t\n\005ERR"
+  "OR\020\0032\353\001\n\016RemoteEndpoint\0224\n\rGetServerInfo"
+  "\022\r.models.Empty\032\022.models.ServerInfo\"\000\0226\n"
+  "\013ListDevices\022\r.models.Empty\032\026.models.Dev"
+  "iceResponse\"\000\0227\n\nReadPacket\022\025.models.Pac"
+  "ketRequest\032\016.models.Packet\"\0000\001\0222\n\007ReadAl"
+  "l\022\021.models.ReadAllOn\032\016.models.Packet\"\000(\001"
+  "0\001B\021\252\002\016IOT.Monitoringb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_models_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_models_2eproto = {
-    false, false, 708, descriptor_table_protodef_models_2eproto,
+    false, false, 789, descriptor_table_protodef_models_2eproto,
     "models.proto",
-    &descriptor_table_models_2eproto_once, nullptr, 0, 6,
+    &descriptor_table_models_2eproto_once, nullptr, 0, 7,
     schemas, file_default_instances, TableStruct_models_2eproto::offsets,
     file_level_metadata_models_2eproto, file_level_enum_descriptors_models_2eproto,
     file_level_service_descriptors_models_2eproto,
@@ -1463,6 +1487,184 @@ void PacketRequest::InternalSwap(PacketRequest* other) {
 
 // ===================================================================
 
+class ReadAllOn::_Internal {
+ public:
+};
+
+ReadAllOn::ReadAllOn(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:models.ReadAllOn)
+}
+ReadAllOn::ReadAllOn(const ReadAllOn& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  ReadAllOn* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.active_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.active_ = from._impl_.active_;
+  // @@protoc_insertion_point(copy_constructor:models.ReadAllOn)
+}
+
+inline void ReadAllOn::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.active_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+ReadAllOn::~ReadAllOn() {
+  // @@protoc_insertion_point(destructor:models.ReadAllOn)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void ReadAllOn::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void ReadAllOn::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void ReadAllOn::Clear() {
+// @@protoc_insertion_point(message_clear_start:models.ReadAllOn)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.active_ = false;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* ReadAllOn::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // bool active = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.active_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* ReadAllOn::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:models.ReadAllOn)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool active = 1;
+  if (this->_internal_active() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_active(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:models.ReadAllOn)
+  return target;
+}
+
+size_t ReadAllOn::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:models.ReadAllOn)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bool active = 1;
+  if (this->_internal_active() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ReadAllOn::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    ReadAllOn::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ReadAllOn::GetClassData() const { return &_class_data_; }
+
+
+void ReadAllOn::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ReadAllOn*>(&to_msg);
+  auto& from = static_cast<const ReadAllOn&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:models.ReadAllOn)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_active() != 0) {
+    _this->_internal_set_active(from._internal_active());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ReadAllOn::CopyFrom(const ReadAllOn& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:models.ReadAllOn)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ReadAllOn::IsInitialized() const {
+  return true;
+}
+
+void ReadAllOn::InternalSwap(ReadAllOn* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.active_, other->_impl_.active_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ReadAllOn::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_models_2eproto_getter, &descriptor_table_models_2eproto_once,
+      file_level_metadata_models_2eproto[5]);
+}
+
+// ===================================================================
+
 class Empty::_Internal {
  public:
 };
@@ -1498,7 +1700,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Empty::GetClassData() const { 
 ::PROTOBUF_NAMESPACE_ID::Metadata Empty::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_models_2eproto_getter, &descriptor_table_models_2eproto_once,
-      file_level_metadata_models_2eproto[5]);
+      file_level_metadata_models_2eproto[6]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -1523,6 +1725,10 @@ Arena::CreateMaybeMessage< ::models::Packet >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::models::PacketRequest*
 Arena::CreateMaybeMessage< ::models::PacketRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::models::PacketRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::models::ReadAllOn*
+Arena::CreateMaybeMessage< ::models::ReadAllOn >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::models::ReadAllOn >(arena);
 }
 template<> PROTOBUF_NOINLINE ::models::Empty*
 Arena::CreateMaybeMessage< ::models::Empty >(Arena* arena) {

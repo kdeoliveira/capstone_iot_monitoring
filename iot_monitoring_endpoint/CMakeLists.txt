@@ -25,4 +25,5 @@ target_compile_options(compiler_flags INTERFACE "$<${gcc_cxx}:$<BUILD_INTERFACE:
 # REQUIRES:
 # Visual C++ compiler
 # choco install ninja
+
 # choco install nasm
