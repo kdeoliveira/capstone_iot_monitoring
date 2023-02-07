@@ -16,10 +16,10 @@ namespace iot_monitoring {
 	class RemoteEndopintServer final : public models::RemoteEndpoint::Service {
 	private:
 		std::shared_ptr<std::vector<data::device_info>> _device_queue;
-		std::shared_ptr<std::map<std::string, data::PacketStream>> _data_queue;
+		std::shared_ptr<std::map<uint16_t, data::PacketStream>> _data_queue;
 		std::mutex _m;
 	public:
-		explicit RemoteEndopintServer(std::shared_ptr<std::vector<data::device_info>>, std::shared_ptr<std::map<std::string, data::PacketStream>>);
+		explicit RemoteEndopintServer(std::shared_ptr<std::vector<data::device_info>>, std::shared_ptr<std::map<uint16_t, data::PacketStream>>);
 
 		grpc::Status GetServerInfo(::grpc::ServerContext*, const ::models::Empty*, ::models::ServerInfo*);
 		grpc::Status ListDevices(::grpc::ServerContext*, const ::models::Empty*, ::models::DeviceResponse*);

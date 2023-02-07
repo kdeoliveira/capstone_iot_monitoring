@@ -8,6 +8,9 @@ void serialize(iot_monitoring::data::packet<int, float> input, unsigned char* ou
   int* id = (int*)output;
   *id = input._header.id;
   id++;
+  uint16_t* uid = (uint16_t*) id;
+  *uid = input.uid;
+  uid++;
   float* p = (float*)id;
   *p = input.payload;
 }
@@ -24,15 +27,19 @@ void setup() {
   randomSeed(10);
 }
 
+const char* buffer = "a1b17.5c1000.d0.0";
+
+
 
 int i = 0;
 void loop() {
-
-  _packet = i % 4;
-  _packet << random(100)*0.5f;
-  serialize(_packet, data);
+  // _packet = i % 4;
+  // _packet.uid = 1;
+  // _packet << random(100)*0.5f;
+  // serialize(_packet, data);
+  Serial.write(buffer);
   Serial.write("\r\n");
-  Serial.write(data, sizeof(int) + sizeof(float));
+  // Serial.write(data, sizeof(int) + sizeof(float));
   
   //Serial.println("test1\n\r");
   i++;

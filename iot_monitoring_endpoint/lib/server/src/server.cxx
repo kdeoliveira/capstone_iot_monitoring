@@ -4,7 +4,7 @@
 namespace iot_monitoring {
 
 
-	RemoteEndopintServer::RemoteEndopintServer(std::shared_ptr<std::vector<data::device_info>> device_q, std::shared_ptr<std::map<std::string, data::PacketStream>> data_q) {
+	RemoteEndopintServer::RemoteEndopintServer(std::shared_ptr<std::vector<data::device_info>> device_q, std::shared_ptr<std::map<uint16_t, data::PacketStream>> data_q) {
 		this->_data_queue = data_q;
 		this->_device_queue = device_q;
 	}
@@ -19,7 +19,7 @@ namespace iot_monitoring {
 
 	static std::unique_ptr<grpc::Server> server;
 
-	void start_server(std::shared_ptr<std::vector<data::device_info>> dev_info, std::shared_ptr<std::map<std::string, data::PacketStream>> data_queue, std::launch mode, const std::string& addr) {
+	void start_server(std::shared_ptr<std::vector<data::device_info>> dev_info, std::shared_ptr<std::map<uint16_t, data::PacketStream>> data_queue, std::launch mode, const std::string& addr) {
 		
 		grpc::EnableDefaultHealthCheckService(true);
 
@@ -74,7 +74,7 @@ namespace iot_monitoring {
 		auto header_id = request->id();
 		std::unique_lock<std::mutex>l{ this->_m };
 
-		auto packets = this->_data_queue->find("test");
+		auto packets = this->_data_queue->find(header_id);
 		if (packets == this->_data_queue->end()) {
 			return grpc::Status::Status(grpc::StatusCode::NOT_FOUND, "No packets found");
 		}
@@ -100,11 +100,12 @@ namespace iot_monitoring {
 	{
 		std::unique_lock<std::mutex>l{ this->_m };
 
-		auto packets = this->_data_queue->find("test");
-		if (packets == this->_data_queue->end()) {
+		
+		if (this->_data_queue->empty()) {
 			return grpc::Status::Status(grpc::StatusCode::NOT_FOUND, "No packets found");
 		}
 
+		
 
 		::models::ReadAllOn cancellation;
 
@@ -113,15 +114,21 @@ namespace iot_monitoring {
 			if (!cancellation.active())
 				break;
 
-			packets->second.wait();
-			::models::Packet out = ::models::Packet::Packet();
+			for (auto packets = this->_data_queue->begin(); packets != this->_data_queue->end(); ++packets) {
+				//packets->second.wait();
+				if (packets->second.empty())
+					continue;
 
-			auto pck = packets->second.pop();
-			out.set_id((int32_t)pck.header.id);
-			out.set_data(std::to_string(pck.payload));
-			auto time_now = std::chrono::system_clock::now().time_since_epoch();
-			out.set_timestamp((int64_t)time_now.count());
-			stream->Write(std::move(out));
+				::models::Packet out = ::models::Packet::Packet();
+
+				auto pck = packets->second.pop();
+				out.set_id((int32_t)pck.header.id);
+				out.set_data(std::to_string(pck.payload));
+				auto time_now = std::chrono::system_clock::now().time_since_epoch();
+				out.set_timestamp((int64_t)time_now.count());
+				stream->Write(std::move(out));
+			}
+			
 			//Sleep(10);
 		}
 		

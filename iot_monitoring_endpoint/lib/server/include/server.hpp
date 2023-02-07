@@ -8,7 +8,7 @@
 #include <map>
 
 namespace iot_monitoring {
-	void start_server(std::shared_ptr<std::vector<data::device_info>>, std::shared_ptr<std::map<std::string, data::PacketStream>>,std::launch, const std::string&);
+	void start_server(std::shared_ptr<std::vector<data::device_info>>, std::shared_ptr<std::map<uint16_t, data::PacketStream>>,std::launch, const std::string&);
 	
 	void shutdown_server();
 }

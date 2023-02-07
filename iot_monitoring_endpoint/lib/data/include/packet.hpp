@@ -40,10 +40,11 @@ namespace iot_monitoring {
 		template<typename S, typename T>
 		struct packet {
 			header<S> header;
+			UINT16 uid;
 			T payload;
 
 			packet() = default;
-			packet(std::vector<char>::iterator& beg) {
+			packet(std::vector<char>::iterator& beg, std::vector<char>::iterator& end) {
 				
 				S temp_id;
 				std::memcpy((void*)&temp_id,beg._Ptr, sizeof(S));
@@ -58,12 +59,19 @@ namespace iot_monitoring {
 					header.id = header_id::UNKNOWN;
 					break;
 				}
+				
+				std::advance(beg, sizeof(S));
 
-				beg += sizeof(S);
+				if (std::distance(beg, end) < sizeof(T) + sizeof(UINT16))
+					throw std::exception("invalid iterator");
+
+				std::memcpy((void*)&uid, beg._Ptr, sizeof(UINT16));
+
+				std::advance(beg, sizeof(UINT16));
 
 				std::memcpy((void*)&payload, beg._Ptr, sizeof(T));
 
-				beg += sizeof(T);
+				std::advance(beg , sizeof(T));
 
 				header.size = sizeof(T) + sizeof(S);
 
@@ -77,9 +85,28 @@ namespace iot_monitoring {
 			template<typename R> packet<S,T>& operator=(const R& value) {
 				static_assert(std::is_same<R, S>::value, "invalid data type");
 
-				std::memcpy(&header.id, &value, sizeof(R));
+				S temp_id;
+				std::memcpy(&temp_id, &value, sizeof(R));
+				switch (temp_id) {
+				case header_id::TEMP:
+				case header_id::CO:
+				case header_id::HEART:
+				case header_id::OXYGEN:
+					header.id = temp_id;
+					break;
+				default:
+					header.id = header_id::UNKNOWN;
+					break;
+				}
+
 				header.size = sizeof(T) + sizeof(R);
 
+				return *this;
+			}
+
+			packet<S, T>& operator=(header_id value) {
+				std::memcpy(&header.id, &value, sizeof(header_id));
+				header.size = sizeof(T) + sizeof(S);
 				return *this;
 			}
 

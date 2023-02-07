@@ -4,12 +4,10 @@
 namespace iot_monitoring {
 	arg_parser::arg_parser(std::vector<std::string>::iterator iter, std::vector<std::string>::iterator end) {
 		this->_cmd = *iter;
-
-		std::for_each(iter, end, [&](std::string& val) {
-			if(!val.empty() && val.at(0) != '-' && val.at(0) != '/') {
-				this->_args.push_back(std::move(val));
+		auto val = std::next(iter, 1);
+		if (val != end && (!val->empty() && val->at(0) != '-' && val->at(0) != '/')) {
+			this->_args.push_back(std::move(*val));
 		}
-			});
 	}
 
 	arg_parser::~arg_parser() {

@@ -61,7 +61,7 @@ struct seq_packet {
 				iter += 2;
 
 				seq.p.push_back(
-					iot_monitoring::data::packet<uint16_t, float>(iter)
+					iot_monitoring::data::packet<uint16_t, float>(iter, _temp.end())
 				);
 				iter = std::search(iter, _temp.end(), rn, rn + 2);
 			}

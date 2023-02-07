@@ -19,18 +19,21 @@ public:
 	}
 };
 
-class HolderSchema : public iot_monitoring::database::schema<int> {
+class HolderSchema : public iot_monitoring::database::schema<float> {
 private:
 	bsoncxx::oid sensor_id;
+	int _uid;
 public:
-	HolderSchema(bsoncxx::oid sensor) : iot_monitoring::database::schema<int>(1, 1) {
+	HolderSchema(bsoncxx::oid sensor) : iot_monitoring::database::schema<float>(1, 1) {
 		this->sensor_id = sensor;
 	}
-	HolderSchema(uint64_t id, uint64_t t) : iot_monitoring::database::schema<int>(id, t) {
+	HolderSchema(uint64_t id, uint64_t t, int uid) : iot_monitoring::database::schema<float>(id, t) {
+		this->_uid = uid;
 	}
 	virtual bsoncxx::document::value generate_document() override {
 		return bsoncxx::builder::basic::make_document(
-			bsoncxx::builder::basic::kvp("value", (int)this->_data),
+			bsoncxx::builder::basic::kvp("uid", (int)this->_uid),
+			bsoncxx::builder::basic::kvp("value", this->_data),
 			bsoncxx::builder::basic::kvp("ref", bsoncxx::builder::basic::make_document(
 				bsoncxx::builder::basic::kvp(
 					"$ref", "sensors"
@@ -52,23 +55,23 @@ public:
 	}
 };
 
-void db_runner(iot_monitoring::database::store* db, std::map<std::string, iot_monitoring::data::PacketStream>* _ps) {
+void db_runner(iot_monitoring::database::store* db, std::map<uint16_t, iot_monitoring::data::PacketStream>* _ps) {
 	if (_ps->empty())
 		return;
 
-	auto iter = _ps->find("test");
+	auto iter = _ps->find(0xFF);
 	if (iter == _ps->end() || iter->second.empty())
 		return;
-	auto p = iter->second.peek();
+	auto p = iter->second.pop();
 
 	auto time_now = std::chrono::system_clock::now().time_since_epoch();
 
-	iot_monitoring::database::schema<int> *doc =  new TestSchema((int64_t)p.header.id, (int64_t)time_now.count());
+	iot_monitoring::database::schema<float> *doc =  new HolderSchema((int64_t)p.header.id, (int64_t)time_now.count(), p.uid);
 	doc->set_data(p.payload);
 
-	db->check_or_create_collection("extra");
+	db->check_or_create_collection("packet_stream");
 
-	db->insert_value("extra", doc);
+	db->insert_value("packet_stream", doc);
 
 	//std::cout << "Value inserted in database\n" << "Queue qty: " << _ps->size() << std::endl;
 

@@ -48,6 +48,12 @@ namespace iot_monitoring {
 				return this->_queue.size();
 			}
 
+			void push(iot_monitoring::data::packet<uint16_t, float>& pak) {
+				std::unique_lock<std::mutex> lock{ this->_mutex };
+				this->_queue.push_back(pak);
+				_cv.notify_one();
+			}
+
 			void push(std::istream& stream) {
 
 				std::istreambuf_iterator<char> beg{ stream }, end;
@@ -64,7 +70,7 @@ namespace iot_monitoring {
 				while (iterator != _buffer.end() && std::next(iterator, 4) != _buffer.end()) {
 					iterator += 2;
 					try {
-						this->_queue.push_back(iot_monitoring::data::packet<uint16_t, float>(iterator));
+						this->_queue.push_back(iot_monitoring::data::packet<uint16_t, float>(iterator, _buffer.end()));
 						iterator = std::search(iterator, _buffer.end(), RN, RN + 2);
 					}
 					catch (std::exception&) {

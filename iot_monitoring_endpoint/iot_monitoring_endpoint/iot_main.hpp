@@ -28,7 +28,17 @@ namespace iot_monitoring {
 		signal(SIGINT, handler);
 
 
-		std::shared_ptr<std::map<std::string, iot_monitoring::data::PacketStream>> _ps = std::make_shared<std::map<std::string, iot_monitoring::data::PacketStream>>();
+		std::shared_ptr<std::map<uint16_t, iot_monitoring::data::PacketStream>> _ps = std::make_shared<std::map<uint16_t, iot_monitoring::data::PacketStream>>();
+
+		//_ps[(uint16_t)iot_monitoring::data::CO] = iot_monitoring::data::PacketStream();
+		//_ps[(uint16_t)iot_monitoring::data::HEART] = iot_monitoring::data::PacketStream();
+		//_ps[(uint16_t)iot_monitoring::data::TEMP] = iot_monitoring::data::PacketStream();
+		//_ps[(uint16_t)iot_monitoring::data::OXYGEN] = iot_monitoring::data::PacketStream();
+		//_ps[(uint16_t)iot_monitoring::data::UNKNOWN] = iot_monitoring::data::PacketStream();
+		//_ps[(uint16_t)0xFF] = iot_monitoring::data::PacketStream();
+
+
+
 
 		std::shared_ptr<std::vector<iot_monitoring::data::device_info>> _ds = std::make_shared<std::vector<iot_monitoring::data::device_info>>();
 

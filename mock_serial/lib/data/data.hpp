@@ -12,6 +12,7 @@ namespace iot_monitoring {
 		template<typename S, typename T>
 		struct packet {
 			header<S> _header;
+			uint16_t uid;
 			T payload;
 
 			constexpr size_t size() const {
