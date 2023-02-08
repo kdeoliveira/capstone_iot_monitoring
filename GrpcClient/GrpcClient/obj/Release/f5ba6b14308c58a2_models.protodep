@@ -1,0 +1,2 @@
+obj\Release/Models.cs \
+obj\Release/ModelsGrpc.cs: ../../iot_monitoring_endpoint/lib/server/proto/models.proto

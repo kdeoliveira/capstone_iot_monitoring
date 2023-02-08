@@ -1,49 +1,73 @@
 #include <Arduino.h>
-#include "data.hpp"
-
+#include "Lora.hpp"
+#include "protothreads.h"
 
 // Arduino data types differs from default c++
 // https://www.tutorialspoint.com/arduino/arduino_data_types.htm#:~:text=int%20stores%20a%2016%2Dbit,%5E15)%20%2D%201).
-void serialize(iot_monitoring::data::packet<int, float> input, unsigned char* output){
-  int* id = (int*)output;
-  *id = input._header.id;
-  id++;
-  uint16_t* uid = (uint16_t*) id;
-  *uid = input.uid;
-  uid++;
-  float* p = (float*)id;
-  *p = input.payload;
+
+//Forward declaration
+static void onReceiveCallback(Lora*);
+
+static struct pt _ptLoraSend;
+
+Lora lora1;
+
+
+
+static int threadedSender(struct pt* pt) {
+  PT_BEGIN(pt);
+  
+  for(;;) {
+    
+    PT_YIELD(pt);
+  }
+  PT_END(pt);
 }
 
-iot_monitoring::data::packet<int, float> _packet;
+static int threadedReader(struct pt* pt, Lora& _lora, unsigned long interval, int id) {
+  PT_BEGIN(pt);
+  static unsigned long timestamp = 0;
+  for(;;) {
+    PT_WAIT_UNTIL(pt, millis() - timestamp > interval);
+    timestamp = millis();
+    _lora.receive();
+  }
+  PT_END(pt);
+}
 
+static void onReceiveCallback(Lora* lora){
+  
+  //Serial.println("Lora callback...");
+  //Serial.println(packetSize);
+  int packetSize = lora->parsePacket();
+  if(packetSize == 0)
+    return;
+  
+  char* buff = new char[packetSize];
+  int i = 0;
+  while(lora->available()){
+    buff[i++] = (char)lora->read();
+  }
+  Serial.write(buff);
+  delete buff;
+}
 
-unsigned char* data = new unsigned char[sizeof(int) + sizeof(float)];  
 void setup() {
   
   Serial.begin(38400,SERIAL_8N1); //8 is data bit, 1 is stop bit and N is parity none
   while(!Serial);
 
-  randomSeed(10);
+  lora1.begin(millis());
+  lora1.onReceive(onReceiveCallback);
+
+  PT_INIT(&_ptLoraSend);
+  
 }
 
-const char* buffer = "a1b17.5c1000.d0.0";
-
-
-
-int i = 0;
 void loop() {
-  // _packet = i % 4;
-  // _packet.uid = 1;
-  // _packet << random(100)*0.5f;
-  // serialize(_packet, data);
-  Serial.write(buffer);
-  Serial.write("\r\n");
-  // Serial.write(data, sizeof(int) + sizeof(float));
-  
-  //Serial.println("test1\n\r");
-  i++;
-  delay(500);
+
+  threadedReader(&_ptLoraSend, lora1, 1500, 1);
+  lora1.send();
 }
 
 
