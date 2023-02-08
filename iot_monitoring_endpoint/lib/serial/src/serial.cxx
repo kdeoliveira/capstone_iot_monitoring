@@ -97,42 +97,46 @@ namespace iot_monitoring {
 
         ClearCommError(this->_device->get_handle(), &this->_err, &this->_status);
 
+        // ==============================
+        // TODO: This check might be unecessary if no data is present at the time read is calleds
+        // ==============================
         //Check if there is something to read
-        if (this->_status.cbInQue > 0)
-        {
-            //If there is we check if there is enough data to read the required number
-            //of characters, if not we'll read only the available characters to prevent
-            //locking of the application.
-            if (this->_status.cbInQue > nbChar)
-            {
-                toRead = nbChar;
-            }
-            else
-            {
-                toRead = this->_status.cbInQue;
-            }
-            read_context* rc = new read_context;
-            
-            std::memset(&rc->CompletionRoutine, 0, sizeof(rc->CompletionRoutine));
-            std::memset(&rc->_overlapped, 0, sizeof(rc->_overlapped));
-            rc->CompletionRoutine = this->_compl_routine;
+        /*if (this->_status.cbInQue > 0)
+        {*/
 
-            //Try to read the require number of chars, and return the number of read bytes on success
-            if (ReadFileEx(this->_device->get_handle(), _buf, toRead, &rc->_overlapped, InternalCompletionRoutine) > 0)
-            {
-                if (GetLastError() != ERROR_INVALID_USER_BUFFER || GetLastError() != ERROR_NOT_ENOUGH_MEMORY) {
-                    sb.sputn((char*)_buf, (std::size_t)toRead); //Stores a pointer to the async returning buffer into stirngbuffer instead
-                    return 0;
-                }
-                else {
-                    throw std::exception("Invalid buffer or memory");
-                }
+        //If there is we check if there is enough data to read the required number
+        //of characters, if not we'll read only the available characters to prevent
+        //locking of the application.
+        if (this->_status.cbInQue > nbChar)
+        {
+            toRead = nbChar;
+        }
+        else
+        {
+            toRead = this->_status.cbInQue;
+        }
+        read_context* rc = new read_context;
+            
+        std::memset(&rc->CompletionRoutine, 0, sizeof(rc->CompletionRoutine));
+        std::memset(&rc->_overlapped, 0, sizeof(rc->_overlapped));
+        rc->CompletionRoutine = this->_compl_routine;
+
+        //Try to read the require number of chars, and return the number of read bytes on success
+        if (ReadFileEx(this->_device->get_handle(), _buf, toRead, &rc->_overlapped, InternalCompletionRoutine) > 0)
+        {
+            if (GetLastError() != ERROR_INVALID_USER_BUFFER || GetLastError() != ERROR_NOT_ENOUGH_MEMORY) {
+                sb.sputn((char*)_buf, (std::size_t)toRead); //Stores a pointer to the async returning buffer into stirngbuffer instead
+                return 0;
             }
             else {
-                printf("%d", GetLastError());
+                throw std::exception("Invalid buffer or memory");
             }
-
         }
+        else {
+            printf("%d", GetLastError());
+        }
+
+        
 
         return 0;
     }

@@ -114,6 +114,8 @@ private:
 		//Async opeartion
 		iot_monitoring::async_serial async_ser(_dev);
 
+		//Serial buffer should be saved incrementally in order to solve partial packet receival
+		//stream iterator may be moved out of the routine and emptied on packet completion basis
 		DWORD waiter;
 		async_ser.set_routine([&,this](DWORD error, DWORD num) {
 			std::istreambuf_iterator<char> beg{ istream }, end;
@@ -121,7 +123,7 @@ private:
 			std::vector<char> _buffer{ beg, end };
 			std::vector<char>::iterator iterator = _buffer.begin();
 			
-			std::cout << _buffer.data() << std::endl;
+			//std::cout << _buffer.data() << std::endl;
 			while (iterator != _buffer.end()) {
 				
 				try {
