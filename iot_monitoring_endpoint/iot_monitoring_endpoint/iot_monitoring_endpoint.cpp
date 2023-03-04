@@ -1,14 +1,17 @@
 ﻿// iot_monitoring_endpoint.cpp : Defines the entry point for the application.
 //
 #include "iot_main.hpp"
+#include "installer.hpp"
+#include "init.hpp"
 
 
 
-int main(int argc, char** argv)
+int __cdecl main(int argc, char** argv)
 {
 
 	
-	iot_monitoring::arg_handler h(argc, argv);
+	
+	h = iot_monitoring::arg_handler(argc, argv);
 
 	if (h.handle(iot_monitoring::ARGUMENTS::INTERACTIVE)) {
 		std::cout << "IOT MONITORING ENDPOINT" << std::endl;
@@ -21,10 +24,17 @@ int main(int argc, char** argv)
 		std::cout << "Service finishing" << std::endl;
 	}
 	else if (h.handle(iot_monitoring::ARGUMENTS::INSTALL)) {
-		std::cout << "Service handler has not been implemented.\nUse interactive mode instead" << std::endl;
+		serviceInstallation(argc, argv);
 	}
 	else {
-		std::cout << "usage: .\iot_monitoring_endpoint.exe -port [hardware id] -install -interactive -help" << std::endl;
+		SERVICE_TABLE_ENTRY dispatchTable[] = {
+	{ "iot-monitoring", (LPSERVICE_MAIN_FUNCTION)main_service },
+			{NULL, NULL}
+		};
+
+		if (!StartServiceCtrlDispatcherA(dispatchTable)) {
+			LogEvent("iot-monitoring service started");
+		}
 	}
 	
 

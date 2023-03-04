@@ -48,6 +48,10 @@ namespace iot_monitoring {
 				
 	}
 
+	std::vector<std::string> arg_handler::getArguments() const {
+		return this->_arguments;
+	}
+
 	arg_handler::~arg_handler() {
 
 	}

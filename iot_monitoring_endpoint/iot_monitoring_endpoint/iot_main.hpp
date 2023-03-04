@@ -11,7 +11,7 @@
 static Worker* poll_db;
 static Worker* poll_uart;
 
-
+// ctrl+c handler
 void handler(int sig) {
 	std::cout << "Interrupt called to stop service" << std::endl;
 	try {
@@ -95,6 +95,7 @@ namespace iot_monitoring {
 			db_runner(db, _ps.get());
 			});
 
+
 		auto server_task = std::async(std::launch::async, [&]() {
 			std::cout << "Server listening on address: " << "0.0.0.0:6501" << std::endl;
 
@@ -102,13 +103,12 @@ namespace iot_monitoring {
 			});
 
 
+		// If running as a service
+		// send those wait handlers to registered cleanup method
 		
 		future_uart.wait();
-
-
 		//server_awaiter.wait_for(std::chrono::seconds(5));
 		std::cout << "Shutting down server" << std::endl;
-
 		iot_monitoring::shutdown_server();
 		server_task.wait_for(std::chrono::seconds(5));
 

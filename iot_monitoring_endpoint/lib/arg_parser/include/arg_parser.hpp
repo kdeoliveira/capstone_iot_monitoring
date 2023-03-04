@@ -61,9 +61,11 @@ namespace iot_monitoring {
 	private:
 	std::vector<std::string> _arguments;
 	public:
+		arg_handler() = default;
 		arg_handler(int,char**);
 		~arg_handler();
 
+		std::vector<std::string> getArguments() const;
 		arg_parser* handle(ARGUMENTS);
 
 	};
