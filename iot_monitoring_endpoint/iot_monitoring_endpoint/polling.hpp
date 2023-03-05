@@ -65,13 +65,22 @@ private:
 	
 	void tick() override{
 		std::future_status stats;
+
+		signal.wait();
+		bool run = true;
+
 		do{
 			stats = signal.wait_for(interval);
 			if (stats == std::future_status::timeout) {
 				std::unique_lock<std::mutex> lock{ this->_mut };
 				runner();
 			}
-		} while (stats != std::future_status::ready);
+
+			{
+				std::unique_lock<std::mutex> lock{ this->_mut };
+				run = signal.get();
+			}
+		} while (run);
 	}
 
 public:

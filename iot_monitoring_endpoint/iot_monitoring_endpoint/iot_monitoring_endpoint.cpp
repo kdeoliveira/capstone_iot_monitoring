@@ -5,14 +5,18 @@
 #include "init.hpp"
 
 
+/*
+This is the main function for the iot-monitoring endpoint
+The application allows the user to start this endpoint as a Windows Service or interactively in the console.
+
+If the endpoint is installed as a windows service, a START_SERVICE signal is immediately send to the service manager to automatically start the application
+*/
 
 int __cdecl main(int argc, char** argv)
 {
-
-	
-	
 	h = iot_monitoring::arg_handler(argc, argv);
 
+	//iot-monitoring starting interactively
 	if (h.handle(iot_monitoring::ARGUMENTS::INTERACTIVE)) {
 		std::cout << "IOT MONITORING ENDPOINT" << std::endl;
 		std::cout << "\n\n";
@@ -23,15 +27,23 @@ int __cdecl main(int argc, char** argv)
 		std::cout << "\n\n";
 		std::cout << "Service finishing" << std::endl;
 	}
+	//iot-monitoring being installed as a windows service
 	else if (h.handle(iot_monitoring::ARGUMENTS::INSTALL)) {
-		serviceInstallation(argc, argv);
+		if (!serviceInstallation()) {
+			std::cout << "Service installation failed" << std::endl;
+			return EXIT_FAILURE;
+		}
+		
+		startService(argc, argv);
 	}
+	//no argument passed, either user didn't not provide args or service control manager has started this application
 	else {
 		SERVICE_TABLE_ENTRY dispatchTable[] = {
-	{ "iot-monitoring", (LPSERVICE_MAIN_FUNCTION)main_service },
+	{ SERVICE_NAME, (LPSERVICE_MAIN_FUNCTION)main_service },
 			{NULL, NULL}
 		};
 
+		// call the ctrl dispatcher with the main_service entrypoint
 		if (!StartServiceCtrlDispatcherA(dispatchTable)) {
 			LogEvent("iot-monitoring service started");
 		}
@@ -42,6 +54,21 @@ int __cdecl main(int argc, char** argv)
 	delete poll_db;
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Sync operation
 	/*iot_monitoring::serial ser(dev);
 
