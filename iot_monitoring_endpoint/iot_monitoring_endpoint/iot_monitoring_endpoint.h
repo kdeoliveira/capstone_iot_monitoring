@@ -40,7 +40,15 @@ void test_packet() {
 
 
 
-
+void printUsage() {
+	std::cout << "usage: iot-monitoring [<commands>] [<optons>]" <<
+		"\n\n" << "The following commands are available:" <<
+		"\n" << "-install: install the application as a windows service" <<
+		"\n" << "-port [hardware id]: defines the hardware id of the connected device" <<
+		"\n" << "-uninstall: uninstall windows service" <<
+		"\n" << "-interactive: run this service interactively in the console" <<
+		std::endl;
+}
 
 
 char rn[3] = "\r\n"; //should include null termination

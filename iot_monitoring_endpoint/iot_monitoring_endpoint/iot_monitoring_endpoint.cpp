@@ -29,7 +29,7 @@ int __cdecl main(int argc, char** argv)
 	}
 	//iot-monitoring being installed as a windows service
 	else if (h.handle(iot_monitoring::ARGUMENTS::INSTALL)) {
-		if (!serviceInstallation()) {
+		if (argc < 3 || !serviceInstallation()) {
 			std::cout << "Service installation failed" << std::endl;
 			return EXIT_FAILURE;
 		}
@@ -47,6 +47,8 @@ int __cdecl main(int argc, char** argv)
 		if (!StartServiceCtrlDispatcherA(dispatchTable)) {
 			LogEvent("iot-monitoring service started");
 		}
+
+		printUsage();
 	}
 	
 

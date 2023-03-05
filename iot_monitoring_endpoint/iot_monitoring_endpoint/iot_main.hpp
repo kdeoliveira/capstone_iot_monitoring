@@ -44,6 +44,11 @@ namespace iot_monitoring {
 
 		auto results = h.handle(iot_monitoring::ARGUMENTS::PORT);
 
+		if (nullptr == results) {
+			std::cout << "No port has been passed";
+			return -1;
+		}
+
 		auto hardware_id = results->get_args();
 
 		std::cout << "Attempting to connect to hardware id: " << hardware_id.front() << "\n";
