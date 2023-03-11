@@ -21,6 +21,7 @@ namespace iot_monitoring {
 			CO,
 			HEART,
 			OXYGEN,
+			GPS,
 			UNKNOWN
 		};
 
@@ -53,6 +54,7 @@ namespace iot_monitoring {
 				case header_id::CO:
 				case header_id::HEART:
 				case header_id::OXYGEN:
+				case header_id::GPS:
 					header.id = temp_id;
 					break;
 				default:
@@ -92,6 +94,7 @@ namespace iot_monitoring {
 				case header_id::CO:
 				case header_id::HEART:
 				case header_id::OXYGEN:
+				case header_id::GPS:
 					header.id = temp_id;
 					break;
 				default:

@@ -83,12 +83,13 @@ namespace iot_monitoring {
 			), f);
 
 
-			std::cout << bsoncxx::to_json(result.get()) << "\n";
+			
 
 			if (!result) {
 				return nullptr;
 			}
 
+			std::cout << bsoncxx::to_json(result.get()) << "\n";
 			
 			auto idkey = result.get()[schema<std::nullptr_t>::id_key()];
 			auto timestamp = result.get()[schema<std::nullptr_t>::timestamp_key()];
@@ -115,7 +116,7 @@ namespace iot_monitoring {
 			), f);
 
 
-			std::cout << bsoncxx::to_json(result.get()) << "\n";
+			//std::cout << bsoncxx::to_json(result.get()) << "\n";
 
 			if (!result) {
 				return nullptr;

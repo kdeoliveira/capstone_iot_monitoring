@@ -9,6 +9,8 @@ void Lora::onReceive(void(*callback)(Lora*)){
 }
 
 void Lora::receive(){
+    _buffer.remove(0,_buffer.length());
+    
     _buffer += "a";
     _buffer += random(1,5);
     _buffer += "b";
@@ -16,6 +18,10 @@ void Lora::receive(){
     _buffer += "c";
     _buffer += random(100)*0.5f;
     _buffer += "d";
+    _buffer += random(100)*0.5f;
+    _buffer += "y";
+    _buffer += random(100)*0.5f;
+    _buffer += "x";
     _buffer += random(100)*0.5f;
     _buffer += "\r\n";
     bufferCompleted = true;
@@ -32,7 +38,7 @@ bool Lora::available(){
 byte Lora::read(){
     if(_buffer.length() == 0)
         return -1;
-    char chr = _buffer.begin()[0];
+    char chr = _buffer.charAt(0);
     _buffer.remove(0,1);
     return chr;
 }

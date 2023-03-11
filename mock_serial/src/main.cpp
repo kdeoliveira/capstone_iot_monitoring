@@ -13,17 +13,6 @@ static struct pt _ptLoraSend;
 Lora lora1;
 
 
-
-static int threadedSender(struct pt* pt) {
-  PT_BEGIN(pt);
-  
-  for(;;) {
-    
-    PT_YIELD(pt);
-  }
-  PT_END(pt);
-}
-
 static int threadedReader(struct pt* pt, Lora& _lora, unsigned long interval, int id) {
   PT_BEGIN(pt);
   static unsigned long timestamp = 0;
@@ -43,13 +32,10 @@ static void onReceiveCallback(Lora* lora){
   if(packetSize == 0)
     return;
   
-  char* buff = new char[packetSize];
-  int i = 0;
+  Serial.flush();
   while(lora->available()){
-    buff[i++] = (char)lora->read();
+    Serial.write(lora->read());
   }
-  Serial.write(buff);
-  delete buff;
 }
 
 void setup() {
@@ -57,6 +43,7 @@ void setup() {
   Serial.begin(38400,SERIAL_8N1); //8 is data bit, 1 is stop bit and N is parity none
   while(!Serial);
 
+  Serial.flush();
   lora1.begin(millis());
   lora1.onReceive(onReceiveCallback);
 
@@ -66,7 +53,7 @@ void setup() {
 
 void loop() {
 
-  threadedReader(&_ptLoraSend, lora1, 1500, 1);
+  threadedReader(&_ptLoraSend, lora1, 1200, 1);
   lora1.send();
 }
 

@@ -21,7 +21,6 @@ target_compile_features(compiler_flags INTERFACE cxx_std_17)
 set_property(TARGET compiler_flags PROPERTY CXX_STANDARD 17)
 
 target_compile_options(compiler_flags INTERFACE "$<${gcc_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>" "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>")
-
 # REQUIRES:
 # Visual C++ compiler
 # choco install ninja

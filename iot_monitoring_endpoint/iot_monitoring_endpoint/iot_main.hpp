@@ -1,7 +1,7 @@
 #pragma once
 
 #include "iot_monitoring_endpoint.h"
-#include "iot_db_test.hpp"
+#include "iot_db_def.hpp"
 #include "polling.hpp"
 #include "packet_stream.hpp"
 #include <map>
@@ -100,6 +100,8 @@ namespace iot_monitoring {
 		//Establish the connection with the db
 		static mongocxx::instance _inst{};
 		iot_monitoring::database::store* db = new iot_monitoring::database::store("mongodb+srv://concordia:iot-monitoring@iot-monitoring.qu31apk.mongodb.net/?retryWrites=true&w=majority", "iot");
+
+		initiate_database(db);
 
 		auto future_poll = poll_db->start([&]() {
 			db_runner(db, _ps.get());

@@ -68,10 +68,10 @@ private:
 
 		signal.wait();
 		bool run = true;
-
 		do{
 			stats = signal.wait_for(interval);
-			if (stats == std::future_status::timeout) {
+			std::this_thread::sleep_for(interval);
+			if (stats == std::future_status::timeout || stats == std::future_status::ready) {
 				std::unique_lock<std::mutex> lock{ this->_mut };
 				runner();
 			}
@@ -108,9 +108,15 @@ private:
 			else if (iter[0] == 'd') {
 				pks.push_back((iter));
 			}
+			else if (iter[0] == 'x') {
+				pks.push_back((iter));
+			}
+			else if (iter[0] == 'y') {
+				pks.push_back((iter));
+			}
 			iter++;
 		} while (iter != end && iter[0] != RN[0]);
-		if (pks.size() != 4)
+		if (pks.size() != 6)
 			throw std::exception("invalid packet");
 		pks.push_back(end);
 		return pks;
@@ -154,6 +160,14 @@ private:
 						else if (pks[x]._Ptr[0] == 'd') {
 							packet.payload = std::stof(std::string(pks[x] + 1, pks[x + 1]));
 							packet = iot_monitoring::data::HEART;
+						}
+						else if (pks[x]._Ptr[0] == 'x') {
+							packet.payload = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							packet = iot_monitoring::data::GPS;
+						}
+						else if (pks[x]._Ptr[0] == 'y') {
+							packet.payload = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							packet = iot_monitoring::data::GPS;
 						}
 
 						(*_queue)[uid].push(packet);
