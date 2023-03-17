@@ -144,34 +144,36 @@ private:
 				try {
 					auto pks = parse(iterator, _buffer.end());
 					static uint16_t uid = std::stoi(std::string(pks[0] + 1, pks[1]));
-					
+					iot_monitoring::data::packet<uint16_t, std::pair<float, float>> packet;
 					for (auto x = 1; x < pks.size() - 1; ++x) {
-						iot_monitoring::data::packet<uint16_t, float> packet;
-						packet.uid = uid;
-
+						
 						if (pks[x]._Ptr[0] == 'b') {
-							packet.payload = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							packet.payload.first = std::stof(std::string(pks[x] + 1, pks[x + 1]));
 							packet = iot_monitoring::data::TEMP;
 						}
 						else if (pks[x]._Ptr[0] == 'c') {
-							packet.payload = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							packet.payload.first = std::stof(std::string(pks[x] + 1, pks[x + 1]));
 							packet = iot_monitoring::data::CO;
 						}
 						else if (pks[x]._Ptr[0] == 'd') {
-							packet.payload = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							packet.payload.first = std::stof(std::string(pks[x] + 1, pks[x + 1]));
 							packet = iot_monitoring::data::HEART;
 						}
 						else if (pks[x]._Ptr[0] == 'x') {
-							packet.payload = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							packet.payload.first = std::stof(std::string(pks[x] + 1, pks[x + 1]));
 							packet = iot_monitoring::data::GPS;
 						}
 						else if (pks[x]._Ptr[0] == 'y') {
-							packet.payload = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							packet.payload.second = std::stof(std::string(pks[x] + 1, pks[x + 1]));
 							packet = iot_monitoring::data::GPS;
+							if(!packet.payload.first)
+								continue;
 						}
-
+						packet.uid = uid;
 						(*_queue)[uid].push(packet);
 						(*_queue)[0xFF].push(packet);
+
+						packet.payload.first = 0;
 
 					}
 					//iot_monitoring::data::packet<uint16_t,float> packet(iterator, _buffer.end());

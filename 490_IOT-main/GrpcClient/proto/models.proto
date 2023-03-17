@@ -1,0 +1,63 @@
+syntax = "proto3";
+package models;
+
+// [csharp_declaration]
+option csharp_namespace = "IOT.Monitoring";
+
+message ServerInfo{
+	int32 major = 1;
+	int32 minor = 2;
+	int32 rpc = 3;
+}
+
+message Device{
+	int32 id = 1;
+	string hardware_id = 2;
+	STATUS status = 3;
+}
+
+message DeviceResponse{
+	int32 size = 1;
+	repeated Device device = 2;
+}
+
+message Packet{
+	int32 id = 1;
+	int64 timestamp = 2;
+	TYPE type = 3;
+	bytes data = 4;
+}
+
+message PacketRequest{
+	int32 id = 1;
+	int64 timestamp = 2;
+}
+
+enum STATUS{
+	NOT_FOUND = 0;
+	OFF = 1;
+	ON = 2;
+	CONNECTING = 3;
+	FAIL = 4;
+	UNKNOWN = 5;
+}
+
+enum TYPE{
+	TIMESTAMP = 0;
+	REAL = 1;
+	STRING = 2;
+	ERROR = 3;
+}
+
+message ReadAllOn{
+	bool active = 1;
+}
+
+message Empty{}
+
+service RemoteEndpoint{
+	rpc GetServerInfo(Empty) returns(ServerInfo){}
+	rpc ListDevices(Empty) returns(DeviceResponse){}
+	rpc ReadPacket(PacketRequest) returns(stream Packet){}
+	rpc ReadAll(stream ReadAllOn) returns(stream Packet){}
+}

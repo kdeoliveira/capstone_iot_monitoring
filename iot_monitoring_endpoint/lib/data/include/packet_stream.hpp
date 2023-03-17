@@ -9,6 +9,7 @@
 #include <condition_variable>
 #include <any>
 #include <iterator> 
+#include <utility>
 
 #define RN "\r\n"
 
@@ -32,7 +33,7 @@ namespace iot_monitoring {
 		};
 
 		
-		class PacketStream : public Stream<float> {
+		class PacketStream : public Stream<std::pair<float,float>> {
 		private:
 			std::mutex _mutex;
 			std::condition_variable _cv;
@@ -48,7 +49,7 @@ namespace iot_monitoring {
 				return this->_queue.size();
 			}
 
-			void push(iot_monitoring::data::packet<uint16_t, float>& pak) {
+			void push(iot_monitoring::data::packet<uint16_t, std::pair<float, float>>& pak) {
 				std::unique_lock<std::mutex> lock{ this->_mutex };
 				this->_queue.push_back(pak);
 				_cv.notify_one();
@@ -70,7 +71,7 @@ namespace iot_monitoring {
 				while (iterator != _buffer.end() && std::next(iterator, 4) != _buffer.end()) {
 					iterator += 2;
 					try {
-						this->_queue.push_back(iot_monitoring::data::packet<uint16_t, float>(iterator, _buffer.end()));
+						this->_queue.push_back(iot_monitoring::data::packet<uint16_t, std::pair<float, float>>(iterator, _buffer.end()));
 						iterator = std::search(iterator, _buffer.end(), RN, RN + 2);
 					}
 					catch (std::exception&) {
@@ -80,14 +81,14 @@ namespace iot_monitoring {
 				_cv.notify_one();
 			}
 
-			iot_monitoring::data::packet<uint16_t, float>& pop() {
+			iot_monitoring::data::packet<uint16_t, std::pair<float, float>>& pop() {
 				std::unique_lock<std::mutex> lock{ this->_mutex };
 				auto x = this->_queue.front();
 				this->_queue.pop_front();
 				return x;
 			}
 
-			iot_monitoring::data::packet<uint16_t, float>& peek() {
+			iot_monitoring::data::packet<uint16_t, std::pair<float, float>>& peek() {
 				return this->_queue.front();
 			}
 

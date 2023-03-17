@@ -36,7 +36,7 @@ namespace iot_monitoring {
 
 			void check_or_create_collection(std::string);
 
-			template<typename T>bsoncxx::stdx::optional<mongocxx::result::insert_one> insert_value(std::string , schema<T>* );
+			bsoncxx::stdx::optional<mongocxx::result::insert_one> insert_value(std::string , schema* );
 
 			template<class Class>std::unique_ptr<Class> get_by_id(std::string collection, int64_t id, mongocxx::options::find f = mongocxx::options::find{});
 
@@ -61,13 +61,12 @@ namespace iot_monitoring {
 			index_options.unique(true);
 
 			this->db[collection].create_index(bsoncxx::builder::basic::make_document(
-				bsoncxx::builder::basic::kvp(schema<std::nullptr_t>::id_key(), 1),
-				bsoncxx::builder::basic::kvp(schema<std::nullptr_t>::timestamp_key(), 1)
+				bsoncxx::builder::basic::kvp(schema::id_key(), 1),
+				bsoncxx::builder::basic::kvp(schema::timestamp_key(), 1)
 			), index_options);
 		}
 
-		template<typename T>
-		bsoncxx::stdx::optional<mongocxx::result::insert_one> store::insert_value(std::string collection, schema<T>* doc) {
+		bsoncxx::stdx::optional<mongocxx::result::insert_one> store::insert_value(std::string collection, schema* doc) {
 			auto val = doc->get_value();
 			auto view = val.view();
 			return this->db[collection].insert_one(std::move(view));
@@ -79,7 +78,7 @@ namespace iot_monitoring {
 			static_assert(!std::is_member_function_pointer_v<decltype(&Class::id_key)>, "incorrect class");
 
 			bsoncxx::stdx::optional<bsoncxx::document::value> result = this->db[collection].find_one(bsoncxx::builder::basic::make_document(
-				bsoncxx::builder::basic::kvp(schema<std::nullptr_t>::id_key(), id)
+				bsoncxx::builder::basic::kvp(schema::id_key(), id)
 			), f);
 
 
@@ -91,8 +90,8 @@ namespace iot_monitoring {
 
 			std::cout << bsoncxx::to_json(result.get()) << "\n";
 			
-			auto idkey = result.get()[schema<std::nullptr_t>::id_key()];
-			auto timestamp = result.get()[schema<std::nullptr_t>::timestamp_key()];
+			auto idkey = result.get()[schema::id_key()];
+			auto timestamp = result.get()[schema::timestamp_key()];
 			
 			if (idkey.type() != bsoncxx::type::k_int64 && timestamp.type() != bsoncxx::type::k_int64) {
 				return nullptr;
@@ -123,8 +122,8 @@ namespace iot_monitoring {
 			}
 
 
-			auto idkey = result.get()[schema<std::nullptr_t>::id_key()];
-			auto timestamp = result.get()[schema<std::nullptr_t>::timestamp_key()];
+			auto idkey = result.get()[schema::id_key()];
+			auto timestamp = result.get()[schema::timestamp_key()];
 
 			if (idkey.type() != bsoncxx::type::k_int64 && timestamp.type() != bsoncxx::type::k_int64) {
 				return nullptr;

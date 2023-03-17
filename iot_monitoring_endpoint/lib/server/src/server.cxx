@@ -85,7 +85,7 @@ namespace iot_monitoring {
 			
 			auto pck = packets->second.pop();
 			out.set_id((int32_t)pck.header.id);
-			out.set_data(std::to_string(pck.payload));
+			out.set_data(std::to_string(pck.payload.first));
 			auto time_now = std::chrono::system_clock::now().time_since_epoch();
 			out.set_timestamp((int64_t)time_now.count());
 
@@ -123,7 +123,14 @@ namespace iot_monitoring {
 
 				auto pck = packets->second.pop();
 				out.set_id((int32_t)pck.header.id);
-				out.set_data(std::to_string(pck.payload));
+				if (pck.header.id == data::GPS) {
+					out.set_data(std::to_string(pck.payload.first));
+					out.set_type(models::TYPE::STRING);
+				}
+				else
+					out.set_data(std::to_string(pck.payload.first)+","+ std::to_string(pck.payload.second));
+
+				
 				auto time_now = std::chrono::system_clock::now().time_since_epoch();
 				out.set_timestamp((int64_t)time_now.count());
 				stream->Write(std::move(out));

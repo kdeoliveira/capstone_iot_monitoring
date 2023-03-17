@@ -5,13 +5,11 @@
 namespace iot_monitoring {
 	namespace database {
 
-		template<typename T>
-		void schema<T>::set_id(uint64_t id) {
+		void schema::set_id(uint64_t id) {
 			this->_id = id;
 		}
 
-		template<typename T>
-		void schema<T>::set_timestamp(uint64_t time) {
+		void schema::set_timestamp(uint64_t time) {
 			this->_timestamp = time;
 		}
 

@@ -1,0 +1,119 @@
+﻿<Page x:Class="IoT1.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:IoT1" xmlns:view="clr-namespace:IoT1.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="HomePage"
+      Background="Transparent"
+      >
+
+   
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderThickness="0.5" Margin ="4" BorderBrush="DarkGray">
+            <TextBlock Grid.Row="0" Text="Heart Rate" HorizontalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold" FontSize="20" Background="#dfecec"/>
+
+        </Border>
+        <Border Grid.Row="1" BorderThickness="0.5" Margin="10" BorderBrush="DarkGray">
+            <StackPanel>
+                <TextBlock Text="Current Heart Rate" Margin="5"/>
+                <TextBox IsEnabled="False" x:Name="heart_rate" Width="auto" Height="60" Margin="0 10 0 0" Background="Transparent" FontSize="24" FontWeight="Bold" TextAlignment="Center" BorderThickness="0"/>
+
+                <!-- 
+                        <TextBlock Text="{Binding HeartRate}" Margin="5" FontSize="24" FontWeight="Bold"/> 
+                        <lvc:CartesianChart Margin="10">
+                            <lvc:CartesianChart.Series>
+                                <lvc:LineSeries Values="{Binding HeartRateValues}" PointGeometry="{x:Null}" StrokeThickness="2"/>
+                            </lvc:CartesianChart.Series>
+                        </lvc:CartesianChart>
+                        -->
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" BorderThickness="0.5" Margin ="4" BorderBrush="DarkGray">
+            <TextBlock Grid.Row="0" Text="CO2" HorizontalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold" FontSize="20" Background="#dfecec"/>
+
+        </Border>
+        <Border Grid.Row="3" BorderThickness="0.5" Margin="10" BorderBrush="DarkGray">
+            <StackPanel>
+                <TextBlock Text="Current CO2 Level" Margin="5"/>
+                <TextBox x:Name="co_2" BorderThickness="0" Width="auto" Height="60" Margin="0 10 0 0" Background="Transparent" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
+
+                <!-- 
+                        <TextBlock Text="{Binding HeartRate}" Margin="5" FontSize="24" FontWeight="Bold"/>
+                        <lvc:CartesianChart Margin="10">
+                            <lvc:CartesianChart.Series>
+                                <lvc:LineSeries Values="{Binding HeartRateValues}" PointGeometry="{x:Null}" StrokeThickness="2"/>
+                            </lvc:CartesianChart.Series>
+                        </lvc:CartesianChart>
+                        -->
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="0" Grid.Column="1" BorderThickness="0.5" Margin ="4" BorderBrush="DarkGray">
+            <TextBlock Grid.Row="0" Text="Oxygen levels" HorizontalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold" FontSize="20" Background="#dfecec"/>
+
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1" BorderThickness="0.5" Margin="10" BorderBrush="DarkGray">
+            <StackPanel>
+                <TextBlock Text="Current Oxygen Levels" Margin="5"/>
+                <TextBox x:Name="oxygen" Width="auto" Height="60" Margin="0 10 0 0" Background="Transparent" FontSize="24" FontWeight="Bold" TextAlignment="Center" BorderThickness="0"/>
+
+                <!-- 
+                        <TextBlock Text="{Binding HeartRate}" Margin="5" FontSize="24" FontWeight="Bold"/>
+                        <lvc:CartesianChart Margin="10">
+                            <lvc:CartesianChart.Series>
+                                <lvc:LineSeries Values="{Binding HeartRateValues}" PointGeometry="{x:Null}" StrokeThickness="2"/>
+                            </lvc:CartesianChart.Series>
+                        </lvc:CartesianChart>
+                        -->
+
+            </StackPanel>
+        </Border>
+
+
+        <Border Grid.Row="2" Grid.Column="1" BorderThickness="0.5" Margin ="4" BorderBrush="DarkGray">
+            <TextBlock Grid.Row="0" Text="Environmental Temperature" HorizontalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold" FontSize="20" Background="#dfecec"/>
+
+        </Border>
+        <Border Grid.Row="3" Grid.Column="1" BorderThickness="0.5" Margin="10" BorderBrush="DarkGray">
+            <StackPanel>
+                <TextBlock Text="Current Temperature" Margin="5"/>
+                <TextBox x:Name="temp" BorderThickness="0" Width="auto" Height="60" Margin="0 10 0 0" Background="Transparent" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
+
+                <!-- 
+                        <TextBlock Text="{Binding HeartRate}" Margin="5" FontSize="24" FontWeight="Bold"/>
+                        <lvc:CartesianChart Margin="10">
+                            <lvc:CartesianChart.Series>
+                                <lvc:LineSeries Values="{Binding HeartRateValues}" PointGeometry="{x:Null}" StrokeThickness="2"/>
+                            </lvc:CartesianChart.Series>
+                        </lvc:CartesianChart>
+                        -->
+
+            </StackPanel>
+        </Border>
+
+        <view:Connect Grid.Row="4" Grid.Column="1"></view:Connect>
+        
+
+    </Grid>
+    
+
+
+
+
+</Page>

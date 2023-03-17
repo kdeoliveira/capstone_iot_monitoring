@@ -1,0 +1,33 @@
+﻿<Window x:Class="IoT1.UserInputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:iot1="clr-namespace:IoT1"
+        Title="Add User" Height="250" Width="350">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="First Name:" />
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtFirstName" />
+        <Label Grid.Row="1" Grid.Column="0" Content="Last Name:" />
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtLastName" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Agent ID:" />
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtAgentID" />
+        <Label Grid.Row="3" Grid.Column="0" Content="Station Number:" />
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtStationNumber" />
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnSave" Content="Save" Click="BtnSave_Click" />
+        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="btnCancel" Content="Cancel" Click="BtnCancel_Click" />
+    </Grid>
+
+</Window>
