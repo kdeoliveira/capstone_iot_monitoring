@@ -123,13 +123,15 @@ namespace iot_monitoring {
 
 				auto pck = packets->second.pop();
 				out.set_id((int32_t)pck.header.id);
-				if (pck.header.id == data::GPS) {
-					out.set_data(std::to_string(pck.payload.first));
-					out.set_type(models::TYPE::STRING);
-				}
+				if (pck.header.id == data::GPS) 
+					out.set_data(std::to_string(pck.payload.first) + "," + std::to_string(pck.payload.second));
 				else
 					out.set_data(std::to_string(pck.payload.first)+","+ std::to_string(pck.payload.second));
 
+				if (pck.payload.first == -9999.00 || pck.payload.second == -9999.00)
+					out.set_type(models::TYPE::ERR);
+				else
+					out.set_type(models::TYPE::STRING);
 				
 				auto time_now = std::chrono::system_clock::now().time_since_epoch();
 				out.set_timestamp((int64_t)time_now.count());

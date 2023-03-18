@@ -215,19 +215,19 @@ const char descriptor_table_protodef_models_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "\n\002id\030\001 \001(\005\022\021\n\ttimestamp\030\002 \001(\003\"\033\n\tReadAll"
   "On\022\016\n\006active\030\001 \001(\010\"\007\n\005Empty*O\n\006STATUS\022\r\n"
   "\tNOT_FOUND\020\000\022\007\n\003OFF\020\001\022\006\n\002ON\020\002\022\016\n\nCONNECT"
-  "ING\020\003\022\010\n\004FAIL\020\004\022\013\n\007UNKNOWN\020\005*6\n\004TYPE\022\r\n\t"
-  "TIMESTAMP\020\000\022\010\n\004REAL\020\001\022\n\n\006STRING\020\002\022\t\n\005ERR"
-  "OR\020\0032\353\001\n\016RemoteEndpoint\0224\n\rGetServerInfo"
-  "\022\r.models.Empty\032\022.models.ServerInfo\"\000\0226\n"
-  "\013ListDevices\022\r.models.Empty\032\026.models.Dev"
-  "iceResponse\"\000\0227\n\nReadPacket\022\025.models.Pac"
-  "ketRequest\032\016.models.Packet\"\0000\001\0222\n\007ReadAl"
-  "l\022\021.models.ReadAllOn\032\016.models.Packet\"\000(\001"
-  "0\001B\021\252\002\016IOT.Monitoringb\006proto3"
+  "ING\020\003\022\010\n\004FAIL\020\004\022\013\n\007UNKNOWN\020\005*4\n\004TYPE\022\r\n\t"
+  "TIMESTAMP\020\000\022\010\n\004REAL\020\001\022\n\n\006STRING\020\002\022\007\n\003ERR"
+  "\020\0032\353\001\n\016RemoteEndpoint\0224\n\rGetServerInfo\022\r"
+  ".models.Empty\032\022.models.ServerInfo\"\000\0226\n\013L"
+  "istDevices\022\r.models.Empty\032\026.models.Devic"
+  "eResponse\"\000\0227\n\nReadPacket\022\025.models.Packe"
+  "tRequest\032\016.models.Packet\"\0000\001\0222\n\007ReadAll\022"
+  "\021.models.ReadAllOn\032\016.models.Packet\"\000(\0010\001"
+  "B\021\252\002\016IOT.Monitoringb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_models_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_models_2eproto = {
-    false, false, 789, descriptor_table_protodef_models_2eproto,
+    false, false, 787, descriptor_table_protodef_models_2eproto,
     "models.proto",
     &descriptor_table_models_2eproto_once, nullptr, 0, 7,
     schemas, file_default_instances, TableStruct_models_2eproto::offsets,

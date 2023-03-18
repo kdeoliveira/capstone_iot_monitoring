@@ -113,13 +113,13 @@ enum TYPE : int {
   TIMESTAMP = 0,
   REAL = 1,
   STRING = 2,
-  ERROR = 3,
+  ERR = 3,
   TYPE_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   TYPE_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool TYPE_IsValid(int value);
 constexpr TYPE TYPE_MIN = TIMESTAMP;
-constexpr TYPE TYPE_MAX = ERROR;
+constexpr TYPE TYPE_MAX = ERR;
 constexpr int TYPE_ARRAYSIZE = TYPE_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* TYPE_descriptor();

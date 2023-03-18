@@ -46,7 +46,7 @@ enum TYPE{
 	TIMESTAMP = 0;
 	REAL = 1;
 	STRING = 2;
-	ERROR = 3;
+	ERR = 3;
 }
 
 message ReadAllOn{
