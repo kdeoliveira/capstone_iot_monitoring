@@ -42,18 +42,36 @@ namespace iot_monitoring {
 		//_ps[(uint16_t)0xFF] = iot_monitoring::data::PacketStream();
 
 
-		auto results = h.handle(iot_monitoring::ARGUMENTS::PORT);
+		auto hardware = h.handle(iot_monitoring::ARGUMENTS::PORT);
+		auto comm = h.handle(iot_monitoring::ARGUMENTS::COM);
+		std::string id;
+		
 
-		if (nullptr == results) {
+		if (comm) {
+			std::cout << "Attempting to connect to serial: " << comm->get_args().front() << "\n";
+
+			auto comms = iot_monitoring::mc::get_available_comm();
+			auto found = std::find_if(comms.begin(), comms.end(), [&](const std::string str) {
+				iot_monitoring::strings::to_upper(comm->get_args().front());
+				return str == comm->get_args().front();
+				});
+			if (found != comms.end())
+				id = *found;
+		}
+		else if (hardware) {
+			std::cout << "Attempting to connect to hardware id: " << hardware->get_args().front() << "\n";
+			id = iot_monitoring::mc::get_comm_id(hardware->get_args().front());
+		}
+		else {
 			std::cout << "No port has been passed";
 			return -1;
 		}
 
-		auto hardware_id = results->get_args();
 
-		std::cout << "Attempting to connect to hardware id: " << hardware_id.front() << "\n";
+		
 
-		auto id = iot_monitoring::mc::get_comm_id(hardware_id.front());
+
+		 
 
 		if (id.empty()) {
 			std::cout << "Invalid hardware id \n";

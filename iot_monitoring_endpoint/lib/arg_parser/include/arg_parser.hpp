@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include "utils.hpp"
 
 
 #define stringify(n) (#n)
@@ -19,7 +20,8 @@ namespace iot_monitoring {
 			UNINSTALL,
 			HELP,
 			PORT,
-			INTERACTIVE
+			INTERACTIVE,
+			COM
 		};
 
 		ARGUMENTS() = default;
@@ -32,6 +34,7 @@ namespace iot_monitoring {
 			GEN_CASE(UNINSTALL)
 			GEN_CASE(PORT)
 			GEN_CASE(INTERACTIVE)
+			GEN_CASE(COM)
 			default:
 				return stringify(HELP);
 			}

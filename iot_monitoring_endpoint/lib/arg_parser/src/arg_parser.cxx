@@ -1,5 +1,4 @@
 #include "arg_parser.hpp"
-#include "utils.hpp"
 
 namespace iot_monitoring {
 	arg_parser::arg_parser(std::vector<std::string>::iterator iter, std::vector<std::string>::iterator end) {
