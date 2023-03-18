@@ -21,8 +21,10 @@ void Lora::receive(){
     _buffer += random(100)*0.5f;
     _buffer += "y";
     _buffer += random(4930, 4950)/10000.0 + 45.0001f;
+    _buffer += "N";
     _buffer += "x";
-    _buffer += random(5760, 5790)/10000.0 + -73.0001f;
+    _buffer += random(5760, 5790)/10000.0 + 73.0001f;
+    _buffer += "W";
     _buffer += "\r\n";
     bufferCompleted = true;
 }

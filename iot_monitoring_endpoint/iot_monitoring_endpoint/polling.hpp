@@ -160,11 +160,27 @@ private:
 							packet = iot_monitoring::data::HEART;
 						}
 						else if (pks[x]._Ptr[0] == 'x') {
-							packet.payload.first = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							auto x_coords = std::string(pks[x] + 1, pks[x + 1]);
+							int pos = 1;
+							size_t location;
+							if ((location = x_coords.find('W',0)) <= x_coords.length()) {
+								pos *= -1;
+								x_coords.erase(location);
+							}
+							packet.payload.first = std::stof(x_coords) * pos;
 							packet = iot_monitoring::data::GPS;
 						}
 						else if (pks[x]._Ptr[0] == 'y') {
-							packet.payload.second = std::stof(std::string(pks[x] + 1, pks[x + 1]));
+							auto y_coords = std::string(pks[x] + 1, pks[x + 1]);
+							int pos = 1;
+							size_t location = 0;
+							if ((location = y_coords.find('S', 0)) <= y_coords.length()) {
+								pos *= -1;
+								y_coords.erase(location);
+							}
+							y_coords.pop_back();
+							
+							packet.payload.second = std::stof(y_coords) * pos;
 							packet = iot_monitoring::data::GPS;
 							if(!packet.payload.first)
 								continue;
