@@ -17,4 +17,4 @@ target_link_libraries(${PROJECT_NAME} PUBLIC serial)
 target_link_libraries(${PROJECT_NAME} PUBLIC database)
 target_link_libraries(${PROJECT_NAME} PUBLIC server)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE compiler_flags)
+#target_link_libraries(${PROJECT_NAME} PRIVATE compiler_flags)

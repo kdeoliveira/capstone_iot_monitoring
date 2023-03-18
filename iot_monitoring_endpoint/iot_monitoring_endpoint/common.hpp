@@ -3,8 +3,9 @@
 #include <windows.h>
 #include <string>
 #include <strsafe.h>
-
 #include <exception>
+
+
 
 #pragma comment(lib, "advapi32.lib")
 
@@ -39,3 +40,5 @@ std::string GetFormattedSystemError() {
 
 	return error;
 }
+
+

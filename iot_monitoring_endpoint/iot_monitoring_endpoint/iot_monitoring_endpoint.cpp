@@ -5,6 +5,8 @@
 #include "init.hpp"
 
 
+
+
 /*
 This is the main function for the iot-monitoring endpoint
 The application allows the user to start this endpoint as a Windows Service or interactively in the console.
@@ -12,13 +14,14 @@ The application allows the user to start this endpoint as a Windows Service or i
 If the endpoint is installed as a windows service, a START_SERVICE signal is immediately send to the service manager to automatically start the application
 */
 
-int __cdecl main(int argc, char** argv)
+int main(int argc, char** argv)
 {
+
 	h = iot_monitoring::arg_handler(argc, argv);
 
 	//iot-monitoring starting interactively
 	if (h.handle(iot_monitoring::ARGUMENTS::INTERACTIVE)) {
-		std::cout << "IOT MONITORING ENDPOINT" << std::endl;
+		std::cout << "\n\nIOT MONITORING ENDPOINT" << std::endl;
 		std::cout << "\n\n";
 		std::cout << "Service starting" << std::endl;
 		
