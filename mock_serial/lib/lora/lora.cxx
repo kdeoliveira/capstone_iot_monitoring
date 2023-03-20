@@ -19,12 +19,13 @@ void Lora::receive(){
     _buffer += random(100)*0.5f;
     _buffer += "d";
     _buffer += random(100)*0.5f;
-    _buffer += "y";
-    _buffer += random(4930, 4950)/10000.0 + 45.0001f;
-    _buffer += "N";
+    // Montrela Location: 45.49383925519548,-73.57699117825592
     _buffer += "x";
-    _buffer += random(5760, 5790)/10000.0 + 73.0001f;
+    _buffer += random(6960, 6970)/10000.0 + 7357.0f;
     _buffer += "W";
+    _buffer += "y";
+    _buffer += random(3830, 3840)/10000.0 + 4549.0f;
+    _buffer += "N";
     _buffer += "\r\n";
     bufferCompleted = true;
 }

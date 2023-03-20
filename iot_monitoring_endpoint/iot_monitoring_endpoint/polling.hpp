@@ -167,8 +167,10 @@ private:
 								pos *= -1;
 								x_coords.erase(location);
 							}
-							packet.payload.first = std::stof(x_coords) * pos;
+							packet.payload.first = std::stof(x_coords) * pos * 0.01;
 							packet = iot_monitoring::data::GPS;
+							if (!packet.payload.second)
+								continue;
 						}
 						else if (pks[x]._Ptr[0] == 'y') {
 							auto y_coords = std::string(pks[x] + 1, pks[x + 1]);
@@ -180,10 +182,9 @@ private:
 							}
 							y_coords.pop_back();
 							
-							packet.payload.second = std::stof(y_coords) * pos;
+							packet.payload.second = std::stof(y_coords) * pos * 0.01;
 							packet = iot_monitoring::data::GPS;
-							if(!packet.payload.first)
-								continue;
+							
 						}
 						packet.uid = uid;
 						(*_queue)[uid].push(packet);
