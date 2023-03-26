@@ -133,7 +133,27 @@ namespace iot_monitoring {
             }
         }
         else {
-            printf("%d", GetLastError());
+            DWORD err = GetLastError();
+
+            LPTSTR buff = nullptr;
+
+            std::string error;
+            DWORD rt = FormatMessage(
+                FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS,
+                NULL,
+                err,
+                LANG_SYSTEM_DEFAULT,
+                (LPSTR)&buff,
+                0,
+                NULL
+            );
+
+            if (buff != NULL) {
+                error = std::string(buff);
+                LocalFree(buff);
+            }
+
+            std::cout << "Failed to read from COM: " << error << std::endl;
         }
 
         
@@ -141,3 +161,4 @@ namespace iot_monitoring {
         return 0;
     }
 }
+

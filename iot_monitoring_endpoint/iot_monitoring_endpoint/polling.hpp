@@ -132,7 +132,7 @@ private:
 		//Serial buffer should be saved incrementally in order to solve partial packet receival
 		//stream iterator may be moved out of the routine and emptied on packet completion basis
 		DWORD waiter;
-		async_ser.set_routine([&,this](DWORD error, DWORD num) {
+		async_ser.set_routine([&](DWORD error, DWORD num) {
 			std::istreambuf_iterator<char> beg{ istream }, end;
 
 			std::vector<char> _buffer{ beg, end };
@@ -189,7 +189,7 @@ private:
 						packet.uid = uid;
 						(*_queue)[uid].push(packet);
 						(*_queue)[0xFF].push(packet);
-
+						std::cout << "Packet received: " << packet.header.id << " - "<< packet.payload.first << "," << packet.payload.second << std::endl;
 						packet.payload.first = 0;
 
 					}
@@ -218,7 +218,7 @@ private:
 		do {
 			waiter = WaitForSingleObjectEx(
 				event,
-				INFINITE,
+				20000,
 				TRUE //alertable state (required)
 			);
 
@@ -234,7 +234,38 @@ private:
 				SetEvent(event);
 				break;
 			default:
-				printf("WaitForSingleObjectEx (%d)\n", GetLastError());
+				DWORD err = GetLastError();
+
+				LPTSTR buff = nullptr;
+
+				std::string error;
+				DWORD rt = FormatMessage(
+					FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS,
+					NULL,
+					err,
+					LANG_SYSTEM_DEFAULT,
+					(LPSTR)&buff,
+					0,
+					NULL
+				);
+
+				if (buff != NULL) {
+					error = std::string(buff);
+					LocalFree(buff);
+				}
+
+				std::cout << "WAIT_IO_COMPLETION TIMEOUT: " << error << std::endl;
+
+				{
+					iot_monitoring::data::packet<uint16_t, std::pair<float, float>> packet;
+					packet.quality = 0xFF;
+					for (uint16_t i = 0; i < iot_monitoring::data::UNKNOWN; i++) {
+						packet = i;
+						std::for_each(_queue->begin(), _queue->end(), [&](auto& iter) {
+							iter.second.push(packet);
+							});
+					}
+				}
 				break;
 
 			}

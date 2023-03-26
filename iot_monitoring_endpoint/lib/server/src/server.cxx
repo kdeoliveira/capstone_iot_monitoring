@@ -132,7 +132,10 @@ namespace iot_monitoring {
 				}
 				else {
 					out.set_data(std::to_string(pck.payload.first)+","+ std::to_string(pck.payload.second));
-					out.set_type(models::TYPE::STRING);
+					if (pck.quality == 0xFF)
+						out.set_type(models::TYPE::ERR);
+					else
+						out.set_type(models::TYPE::STRING);
 				}
 
 

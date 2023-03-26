@@ -43,6 +43,7 @@ namespace iot_monitoring {
 			header<S> header;
 			UINT16 uid;
 			T payload;
+			uint8_t quality;
 
 			packet() = default;
 			packet(std::vector<char>::iterator& beg, std::vector<char>::iterator& end) {

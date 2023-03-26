@@ -49,5 +49,5 @@ namespace iot_monitoring {
 		std::function<void(DWORD, DWORD)>CompletionRoutine;
 	};
 
-
+	
 }
