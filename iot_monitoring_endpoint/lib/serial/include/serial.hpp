@@ -38,6 +38,10 @@ namespace iot_monitoring {
 
 		void set_routine(std::function<void(DWORD, DWORD)>);
 
+		void set_device(std::shared_ptr<device> dev) {
+			this->_device = dev;
+		}
+
 		int read_data(std::stringbuf&, std::size_t);
 		bool write_data(const std::string);
 

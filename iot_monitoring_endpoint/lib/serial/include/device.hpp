@@ -28,6 +28,12 @@ namespace iot_monitoring {
 		bool is_connected() {
 			return this->connected;
 		}
+		void disconnect() {
+			if (this->connected) {
+				this->connected = false;
+				CloseHandle(get_handle());
+			}
+		}
 	};
 
 	class mc final : public device{
@@ -41,6 +47,7 @@ namespace iot_monitoring {
 		~mc();
 		virtual HANDLE get_handle() override;
 		
+
 
 		[[nodiscard]] static std::shared_ptr<device> create(std::string str, DCB dcb, unsigned long mode = 0) {
 			return std::shared_ptr<mc>(new mc(str,dcb,mode));

@@ -17,7 +17,7 @@ namespace iot_monitoring {
 		if (this->_handle == INVALID_HANDLE_VALUE) {
 			if (GetLastError() == ERROR_FILE_NOT_FOUND) {
 				
-				throw std::exception();
+				throw std::exception("Port not connected");
 
 			}
 			else {
@@ -59,6 +59,8 @@ namespace iot_monitoring {
 			CloseHandle(this->_handle);
 		}
 	}
+
+
 
 	HANDLE mc::get_handle() {
 		return this->_handle;

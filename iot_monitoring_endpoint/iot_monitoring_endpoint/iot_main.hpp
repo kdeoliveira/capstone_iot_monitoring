@@ -93,7 +93,11 @@ namespace iot_monitoring {
 
 		//Poll into uart serial
 		//=========================
-		poll_uart = new Runner(dev, _ps.get());
+
+		
+		poll_uart = new Runner(dev, _ps.get(), [&]() {
+			return iot_monitoring::mc::create(id, dcb_serial_params, FILE_FLAG_OVERLAPPED);
+		});
 		auto future_uart = poll_uart->start();
 		//Give some time for the IoT to start
 		Sleep(2000); 

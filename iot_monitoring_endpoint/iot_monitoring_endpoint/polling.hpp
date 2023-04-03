@@ -91,6 +91,7 @@ class Runner : public Worker {
 private:
 	std::shared_ptr<iot_monitoring::device> _dev;
 	std::map<uint16_t, iot_monitoring::data::PacketStream>* _queue;
+	std::function< std::shared_ptr<iot_monitoring::device>(void)> onFailed;
 
 	std::vector<std::vector<char>::iterator> parse(std::vector<char>::iterator& iter, std::vector<char>::iterator& end) {
 		std::vector<std::vector<char>::iterator> pks;
@@ -266,6 +267,18 @@ private:
 							});
 					}
 				}
+
+				std::cout << "Reattempt to connect with Serial/COM port" << std::endl;
+				try {
+					this->_dev->disconnect();
+					this->_dev = onFailed();
+					async_ser.set_device(this->_dev);
+					async_ser.read_data(bb, 255);
+
+				}
+				catch (std::exception& e) {
+					std::cout << "Failed to connect with Serial/COM port: " << e.what() << std::endl;
+				}
 				break;
 
 			}
@@ -277,8 +290,7 @@ private:
 		
 	}
 public:
-
-	Runner(std::shared_ptr<iot_monitoring::device> dev, std::map<uint16_t, iot_monitoring::data::PacketStream>* queue) : _dev{ dev }, _queue{queue} {}
+	Runner(std::shared_ptr<iot_monitoring::device> dev, std::map<uint16_t, iot_monitoring::data::PacketStream>* queue, std::function< std::shared_ptr<iot_monitoring::device>(void)> onFailed) : _dev{ dev }, _queue{ queue }, onFailed{ onFailed } {}
 
 	~Runner(){}
 };
